@@ -1,5 +1,15 @@
 <template>
   <div class="main">
+    <el-upload
+      class="upload-demo"
+      drag
+      action="http://zth.nat300.top/CLand/image"
+      :on-success="handleImageSuccess"
+      multiple>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+    </el-upload>
     <div class="content">
       <div class="word">找回密码</div>
       <div class="form">
@@ -112,6 +122,9 @@ export default {
         this.src = 'data:image/png;base64,' + res.data.replace(/\. +/g, '').replace(/[\r\n]/g, '')
       })
       // this.src = 'http://zth.nat300.top/user/verCode?' + num
+    },
+    handleImageSuccess (res, file, fileList) {
+      console.log(res, file, fileList)
     }
   }
 

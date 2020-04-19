@@ -20,7 +20,7 @@
                     </el-input>
                 </div>
                 <div class="btn fl">
-                    <el-button type="primary">发布土地信息</el-button>
+                    <el-button type="primary" @click="sendMsg">发布土地信息</el-button>
                     <el-button type="primary">发布租房信息</el-button>
                 </div>
             </div>
@@ -39,6 +39,11 @@ export default {
       input2: '',
       input3: '',
       select: ''
+    }
+  },
+  methods: {
+    sendMsg () {
+      this.$router.push({name: 'MsgStep'})
     }
   }
 }

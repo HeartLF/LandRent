@@ -8,6 +8,8 @@ import House from '@/components/house/index'
 import Register from '@/components/register/index'
 import Login from '@/components/login/index'
 import RetrievePass from '@/components/retrievePassword/index'
+import MsgStep from '@/components/msgstep/index'
+import Detail from '@/components/landDetail/index'
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +28,10 @@ export default new Router({
         name: 'Land',
         component: Land
       }, {
+        path: '/land/:id',
+        name: 'Detail',
+        component: Detail
+      }, {
         path: '/house',
         name: 'House',
         component: House
@@ -43,6 +49,10 @@ export default new Router({
         path: '/retrievePass',
         name: 'RetrievePass',
         component: RetrievePass
+      }, {
+        path: '/MsgStep',
+        name: 'MsgStep',
+        component: MsgStep
       }
       ]
     }

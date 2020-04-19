@@ -49,6 +49,7 @@ export default {
             'password': this.form.password
           }).then(res => {
             if (res.data.state === 1) {
+              localStorage.setItem('useId', res.data.data.id)
               this.$message.success('登录成功')
             } else {
               this.$message.warning(res.data.message)

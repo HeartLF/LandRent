@@ -34,7 +34,17 @@
                     <span>湖南/常德/澧县</span>
                 </p>
                 <p class="fl">
-                    <el-button style="widthL170px;height:44px;background-color: #ff4600;color:#fff">立即签约</el-button>
+                    <span style="color:#999">选择租赁时间:</span>
+                    <el-date-picker
+                        v-model="value1"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                    </el-date-picker>
+                </p>
+                <p class="fl" style="margin-top:30px">
+                    <el-button @click="handClick" style="widthL170px;height:44px;background-color: #ff4600;color:#fff">立即签约</el-button>
                 </p>
             </div>
             <div class="fl">
@@ -60,14 +70,28 @@
         <h3>优质地源推荐</h3>
         <Content style="margin-top:10px"/>
     </div>
+    <ContractDialog :showModel.sync="show"/>
   </div>
 </template>
 
 <script>
 import Content from '@/components/content'
+import ContractDialog from '@/components/contract'
 export default {
   components: {
-    Content
+    Content,
+    ContractDialog
+  },
+  data () {
+    return {
+      value1: '',
+      show: false
+    }
+  },
+  methods: {
+    handClick () {
+      this.show = true
+    }
   }
 }
 </script>

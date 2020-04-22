@@ -70,12 +70,12 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .boardBox{
-    margin: 100px auto 20px;
-    width: 80vw;
-    height: 35vh;
+
+    // width: 80vw;
+    height: 20vh;
     background: #eee;
     canvas {
-        border: 1px solid #298cff;
+        // border: 1px solid #298cff;
     }
 }
 </style>

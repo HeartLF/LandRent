@@ -50,7 +50,11 @@ export default {
           }).then(res => {
             if (res.data.state === 1) {
               localStorage.setItem('useId', res.data.data.id)
+              localStorage.setItem('useInfo', JSON.stringify(res.data.data))
               this.$message.success('登录成功')
+              this.$router.push({
+                name: 'Home'
+              })
             } else {
               this.$message.warning(res.data.message)
             }

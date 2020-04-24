@@ -10,19 +10,19 @@
           <div class="hotType">
             <h3 class="fl">热门分类</h3>
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="耕地" name="first">
+                <el-tab-pane label="耕地" name="耕地">
+                    <Content :list="list"/>
+                </el-tab-pane>
+                <el-tab-pane label="林地" name="林地">
                     <Content/>
                 </el-tab-pane>
-                <el-tab-pane label="林地" name="second">
+                <el-tab-pane label="农场" name="农场">
                     <Content/>
                 </el-tab-pane>
-                <el-tab-pane label="农场" name="third">
+                <el-tab-pane label="农家乐" name="农家乐">
                     <Content/>
                 </el-tab-pane>
-                <el-tab-pane label="农家乐" name="fourth">
-                    <Content/>
-                </el-tab-pane>
-                <el-tab-pane label="宅基地" name="five">
+                <el-tab-pane label="宅基地" name="宅基地">
                     <Content/>
                 </el-tab-pane>
             </el-tabs>
@@ -54,13 +54,31 @@ export default {
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585549142155&di=68ff5d953e015f9ff65d67f02b86c0f5&imgtype=0&src=http%3A%2F%2Fp1.ssl.cdn.btime.com%2Ft014312f2e3d2537241.jpg%3Fsize%3D592x376',
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585549142155&di=76c718c867f4ff4e639e1e1e41ce3346&imgtype=0&src=http%3A%2F%2Fwww.tobaccochina.com%2Fuploadfiles%2Fpic%2F20130619092715737A.jpg'
       ],
-      activeName: 'first',
-      currentDate: new Date()
+      activeName: '耕地',
+      currentDate: new Date(),
+      list: [],
+      cultivatedlandList: [], // 耕地
+      woodlandList: [], // 林地
+      FarmList: [], // 农场
+      agritainmentList: [], // 农家乐
+      homesteadList: [] // 宅基地
     }
+  },
+  created () {
+    this.getLandByType(this.activeName)
   },
   methods: {
     handleClick (tab, event) {
-      console.log(tab, event)
+      this.getLandByType(this.activeName)
+    },
+    async getLandByType (type) {
+      const res = await this.$http.post('land/getLandByType', {
+        type
+      })
+      const {data} = res
+      if (data && data.state === 1) {
+        this.list = data.data
+      }
     }
   }
 }

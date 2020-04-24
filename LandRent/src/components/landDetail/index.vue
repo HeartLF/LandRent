@@ -11,37 +11,27 @@
             </el-carousel>
         </div>
         <div class="fl" style="margin-left:20px;overflow:hidden">
-            <h3 style="padding:10px 10px;margin:20px">湖南常德460亩优质水田出租</h3>
+            <h3 style="padding:10px 10px;margin:20px">{{list.title}}</h3>
             <div class="price">
                 <span>价格：</span>
-                <span style="color:#ff9f00">400元/亩</span>
+                <span style="color:#ff9f00">{{list.price}}元/亩</span>
             </div>
             <div class="info fl">
                 <p class="fl">
                     <span style="color:#999">土地用途</span>
-                    <span>耕地|水田</span>
+                    <span>{{list.type}}</span>
                 </p>
                 <p class="fl">
                     <span style="color:#999">流转年限</span>
-                    <span>10年</span>
+                    <span>{{list.years}}年</span>
                 </p>
                 <p class="fl">
                     <span style="color:#999" >土地面积</span>
-                    <span>460 亩</span>
+                    <span>{{list.area}} 亩</span>
                 </p>
                 <p class="fl">
                     <span style="color:#999">土地地点</span>
-                    <span>湖南/常德/澧县</span>
-                </p>
-                <p class="fl">
-                    <span style="color:#999">选择租赁时间:</span>
-                    <el-date-picker
-                        v-model="value1"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期">
-                    </el-date-picker>
+                    <span>{{`${list.region}${list.address}`}}</span>
                 </p>
                 <p class="fl" style="margin-top:30px">
                     <el-button @click="handClick" style="widthL170px;height:44px;background-color: #ff4600;color:#fff">立即签约</el-button>
@@ -50,12 +40,13 @@
             <div class="fl">
                 <p >
                     <span style="color:#999">联系人</span>
-                    <span>崔女士</span>
+                    <span>{{list.person}}</span>
                 </p>
                 <p >
                     <span style="color:#999">电话</span>
-                    <span style="color:#ff9f00">152****5522</span>
-                    <span class="msg">查看</span>
+                    <span v-if="isshow" style="color:#ff9f00">{{list.Newphone}}</span>
+                    <span v-else style="color:#ff9f00">{{list.phone}}</span>
+                    <span class="msg" @click="check">查看</span>
                 </p>
             </div>
         </div>
@@ -64,13 +55,13 @@
     <div>
         <h3>土地详情</h3>
         <h5 style="margin:10px 10px">卖家有话说</h5>
-        <p style="margin:10px 10px;padding:10px 10px">非常优质的土地，去年弄的土地平整，三通一平，间距一公里，交通也非常便利，适合多种种植。欢迎广大老板前来考察</p>
+        <p style="margin:10px 10px;padding:10px 10px">{{list.description}}</p>
     </div>
     <div>
         <h3>优质地源推荐</h3>
         <Content style="margin-top:10px"/>
     </div>
-    <ContractDialog :showModel.sync="show"/>
+    <ContractDialog :item="list"  :showModel.sync="show"/>
   </div>
 </template>
 
@@ -85,12 +76,33 @@ export default {
   data () {
     return {
       value1: '',
-      show: false
+      show: false,
+      list: [],
+      isshow: true
     }
+  },
+  created () {
+    this.getLandInfo(this.$route.params.id)
   },
   methods: {
     handClick () {
       this.show = true
+    },
+    async getLandInfo (landId) {
+      const res = await this.$http.post('land/getLandById', {
+        landId
+      })
+      const {data} = res
+      if (data && data.state === 1) {
+        this.list = data.data
+        let {phone} = this.list
+        let mobile = String(phone)
+        let reg = /^(\d{3})\d{4}(\d{4})$/
+        this.list.Newphone = mobile.replace(reg, '$1****$2')
+      }
+    },
+    check () {
+      this.isshow = false
     }
   }
 }

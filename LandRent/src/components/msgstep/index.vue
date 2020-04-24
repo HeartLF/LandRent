@@ -13,10 +13,10 @@
             <h6>选择土地分类</h6>
             <div class="radio">
                 <el-radio v-model="type" label="耕地" border>耕地</el-radio>
-                <el-radio v-model="type" label="园地" border>园地</el-radio>
+                <el-radio v-model="type" label="农场" border>农场</el-radio>
                 <el-radio v-model="type" label="林地" border>林地</el-radio>
-                <el-radio v-model="type" label="草地" border>草地</el-radio>
-                <el-radio v-model="type" label="农房" border>农房</el-radio>
+                <el-radio v-model="type" label="农家乐" border>农家乐</el-radio>
+                <el-radio v-model="type" label="宅基地" border>宅基地</el-radio>
             </div>
             <div class="nextbtn">
                 <el-button class="btn" @click="nextBtn">下一步</el-button>
@@ -42,7 +42,7 @@
                     </el-form-item>
                     <el-form-item label="上传图片" >
                         <el-upload
-                            action="/LandImage/upload"
+                            action="landImage/upload"
                             list-type="picture-card"
                             :on-success="handleImageSuccess"
                             :on-preview="handlePictureCardPreview"
@@ -199,7 +199,6 @@ export default {
     },
     handleImageSuccess (res, file, fileList) {
       this.fileList.push(res.data)
-      console.log(res, file, fileList)
     },
     handleRemove (file, fileList) {
       console.log(file, fileList)
@@ -221,6 +220,7 @@ export default {
           // const params = JSON.stringify(this.form)
           this.$http.post('/land/add', {
             userId: localStorage.getItem('useId'),
+            images: this.fileList,
             type: this.type,
             region: this.form.region,
             address: this.form.address,
@@ -234,9 +234,12 @@ export default {
             imageCode: this.form.imageCode,
             phoneCode: this.form.phoneCode
           }).then(res => {
-            console.log(res)
+            if (res && res.state === 1) {
+              this.showFinish = true
+              this.showType = false
+              this.showContent = false
+            }
           })
-          console.log(JSON.stringify(this.form))
         } else {
           return false
         }

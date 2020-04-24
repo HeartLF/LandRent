@@ -34,7 +34,7 @@
               </ul>
           </div>
           <div class="login">
-            <span v-show="islogin" @click="login">请登录 |</span>
+            <span v-show="islogin" @click="login">{{useInfo.name?useInfo.name:'请登录 |'}}</span>
             <span v-show="isregister" @click="register">注册</span>
           </div>
         </div>
@@ -52,6 +52,12 @@ export default {
   components: {
     Menu,
     Search
+  },
+  computed: {
+    useInfo () {
+      console.log(JSON.stringify(localStorage.getItem('useInfo')))
+      return localStorage.getItem('useInfo')
+    }
   },
   data () {
     return {

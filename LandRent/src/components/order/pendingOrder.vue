@@ -8,6 +8,7 @@
         :rows="rows"
         :total="total"
         :loading="loading"
+        sourceUrl="/order/getUnpaidOrderByUId"
         :tableOption="tableOption"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
@@ -26,7 +27,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       page: 1,
       rows: 20,
       total: 100,
@@ -97,16 +98,16 @@ export default {
     }
   },
   created () {
-    this.getTableData()
+    // this.getTableData()
   },
   methods: {
-    getTableData () {
-      this.$http.post('/order/getUnpaidOrderByUId', {
-        'userId': +localStorage.getItem('useId')
-      }).then(res => {
-        this.tableData = res.data
-      })
-    },
+    // getTableData () {
+    //   this.$http.post('/order/getUnpaidOrderByUId', {
+    //     'userId': +localStorage.getItem('useId')
+    //   }).then(res => {
+    //     this.tableData = res.data.data
+    //   })
+    // },
     // 切换当前一页展示多少条
     sizeChange (val) {
       this.rows = val

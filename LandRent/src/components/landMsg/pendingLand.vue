@@ -9,6 +9,7 @@
         :total="total"
         :loading="loading"
         :tableOption="tableOption"
+         sourceUrl="/land/uncheckedLand"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
@@ -72,48 +73,21 @@ export default {
             methods: 'del'
           }
         ]
-      },
-      // 表格数据
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: 0
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          sex: 1
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          sex: 0
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          sex: 1
-        }
-      ]
+      }
     }
   },
   methods: {
-    getTableData () {
-      this.$http.post('/land/userAllLand', {
-        userId: +localStorage.getItem('useId')
-      }).then(res => {
-        let {data} = res
-        if (data.state === 1) {
-          this.tableData = data.data
-          console.log(data)
-        }
-      })
-    },
+    // getTableData () {
+    //   this.$http.post('/land/userAllLand', {
+    //     userId: +localStorage.getItem('useId')
+    //   }).then(res => {
+    //     let {data} = res
+    //     if (data.state === 1) {
+    //       this.tableData = data.data
+    //       console.log(data)
+    //     }
+    //   })
+    // },
     // 切换当前一页展示多少条
     sizeChange (val) {
       this.rows = val

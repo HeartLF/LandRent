@@ -8,6 +8,7 @@
         :rows="rows"
         :total="total"
         :loading="loading"
+         sourceUrl="/order/getInvalidOrder"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
@@ -25,7 +26,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       page: 1,
       rows: 20,
       total: 100,
@@ -78,14 +79,14 @@ export default {
     }
   },
   created () {
-    this.getTableData()
+    // this.getTableData()
   },
   methods: {
     getTableData () {
       this.$http.post('/order/getInvalidOrder', {
         'userId': +localStorage.getItem('useId')
       }).then(res => {
-        this.tableData = res.data
+        this.tableData = res.data.data
       })
     },
     // 切换当前一页展示多少条

@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       page: 1,
       rows: 20,
       total: 100,
@@ -92,11 +92,11 @@ export default {
     }
   },
   created () {
-    this.$http.post('/order/getSuccessOrder', {
-      'userId': +localStorage.getItem('useId')
-    }).then(res => {
-      this.tableData = res.data
-    })
+    // this.$http.post('/order/getSuccessOrder', {
+    //   'userId': +localStorage.getItem('useId')
+    // }).then(res => {
+    //   this.tableData = res.data.data
+    // })
   },
   methods: {
     // 切换当前一页展示多少条

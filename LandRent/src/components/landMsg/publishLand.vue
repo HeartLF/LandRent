@@ -2,13 +2,14 @@
   <div>
     <h2 style="padding:10px 10px;color:#ff9f00">已发布土地信息</h2>
     <Table
-        :tableData="tableData"
+        ref="tableList"
         :tableColumns="tableLabel"
         :page="page"
         :rows="rows"
         :total="total"
         :loading="loading"
         :tableOption="tableOption"
+         sourceUrl="/land/userAllLand"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
@@ -26,7 +27,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       page: 1,
       rows: 20,
       total: 100,
@@ -72,38 +73,11 @@ export default {
             methods: 'del'
           }
         ]
-      },
-      // 表格数据
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: 0
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          sex: 1
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          sex: 0
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          sex: 1
-        }
-      ]
+      }
     }
   },
   created () {
-    this.getTableData()
+    // this.getTableData()
   },
   methods: {
     getTableData () {
@@ -113,7 +87,6 @@ export default {
         let {data} = res
         if (data.state === 1) {
           this.tableData = data.data
-          console.log(data)
         }
       })
     },
@@ -137,6 +110,7 @@ export default {
       console.log(val)
     },
     del (val) {
+      console.log(val)
       // 我是删除
       this.$confirm('确定要删除该土地吗?', '提示', {
         confirmButtonText: '确定',
@@ -144,10 +118,10 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http.post('/land/delById', {
-          landId: ''
+          landId: val.id
         }).then(res => {
-          if (res.data === 1) {
-            this.getTableData()
+          if (res.data.state === 1) {
+            this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
               message: '取消成功!'
@@ -155,10 +129,10 @@ export default {
           }
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
+        // this.$message({
+        //   type: 'info',
+        //   message: '已取消删除'
+        // })
       })
     }
   }

@@ -2,6 +2,7 @@
   <div>
     <h2 style="padding:10px 10px;color:#ff9f00">全部订单</h2>
     <Table
+        ref="tableList"
         :tableData="tableData"
         :tableColumns="tableLabel"
         :page="page"
@@ -9,6 +10,7 @@
         :total="total"
         :loading="loading"
         :tableOption="tableOption"
+         sourceUrl="/order/getAllOrder"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
@@ -26,7 +28,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       page: 1,
       rows: 20,
       total: 100,
@@ -96,17 +98,20 @@ export default {
       tableData: []
     }
   },
-  created () {
-    this.getTableData()
+  mounted () {
+    console.log(this.$refs.tableList)
+    // this.$refs.tableList.getTableData()
+    // this.getTableData()
   },
   methods: {
-    getTableData () {
-      this.$http.post('/order/getAllOrder', {
-        'userId': +localStorage.getItem('useId')
-      }).then(res => {
-        this.tableData = res.data
-      })
-    },
+    // getTableData () {
+    //   this.$http.post('/order/getAllOrder', {
+    //     'userId': +localStorage.getItem('useId')
+    //   }).then(res => {
+    //     console.log(res.data)
+    //     this.tableData = res.data.data
+    //   })
+    // },
     // 切换当前一页展示多少条
     sizeChange (val) {
       this.rows = val

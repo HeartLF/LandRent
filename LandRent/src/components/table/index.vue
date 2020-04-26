@@ -3,7 +3,7 @@
     <!-- 表格开始 -->
     <el-table
       ref="table"
-      v-loading="loading"
+      v-loading="vLoading"
       element-loading-text="加载中"
       :data="tableData"
       border
@@ -71,15 +71,15 @@ export default {
     loading: {
       // 预加载
       type: Boolean,
-      default: false
+      default: true
     },
-    tableData: {
-      // 表格数据
-      type: Array,
-      default: () => {
-        return []
-      }
-    },
+    // tableData: {
+    //   // 表格数据
+    //   type: Array,
+    //   default: () => {
+    //     return []
+    //   }
+    // },
     sourceUrl: {
       type: String,
       default: ''
@@ -120,16 +120,26 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      tableData: [],
+      vLoading: this.loading
+    }
+  },
   created () {
-    this.$http.post(this.sourceUrl, {
-      id: localStorage.getItem('useId')
-    }).then(res => {
-      if (res && res.state === 1) {
-        console.log(res)
-      }
-    })
+    this.getTableData()
   },
   methods: {
+    getTableData () {
+      this.$http.post(this.sourceUrl, {
+        userId: +localStorage.getItem('useId')
+      }).then(res => {
+        if (res && res.data.state === 1) {
+          this.tableData = res.data.data
+          this.vLoading = false
+        }
+      })
+    },
     // 切换当前一页展示多少条
     handleSizeChange (val) {
       this.$emit('sizeChange', val)

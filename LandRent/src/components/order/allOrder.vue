@@ -42,8 +42,8 @@ export default {
           label: '创建时间',
           param: 'createTime',
           render: row => {
-            let time = new Date().getTime()
-            let date = new Date(time)
+            // let time = new Date().getTime()
+            let date = new Date(row.createTime)
             return date.toLocaleString()
           }
         },
@@ -51,8 +51,8 @@ export default {
           label: '支付时间',
           param: 'paytime',
           render: row => {
-            let time = new Date().getTime()
-            let date = new Date(time)
+            // let time = new Date().getTime()
+            let date = new Date(row.paytime)
             return date.toLocaleString()
           }
         },
@@ -66,12 +66,14 @@ export default {
         },
         {
           label: '订单状态',
-          param: 'isAlive',
+          param: 'status',
           render: row => {
-            if (row.isAlive) {
-              return '正常订单'
+            if (row.status === 0) {
+              return '待付款'
+            } else if (row.status === 1) {
+              return '已付款'
             } else {
-              return '取消订单'
+              return '已退款'
             }
           }
         }
@@ -84,13 +86,15 @@ export default {
             label: '取消订单',
             type: 'danger',
             icon: 'el-icon-delete',
-            methods: 'delOrder'
+            methods: 'delOrder',
+            ishow: true
           },
           {
             label: '退款',
             type: 'danger',
             icon: 'el-icon-delete',
-            methods: 'refund'
+            methods: 'refund',
+            ishow: false
           }
         ]
       },
@@ -132,6 +136,7 @@ export default {
       console.log(val)
     },
     delOrder (val) {
+      let orderId = val.id
       // 我是删除
       this.$confirm('确定取消订单?', '提示', {
         confirmButtonText: '确定',
@@ -139,10 +144,11 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http.post('/order/cancle', {
-          orderId: ''
+          orderId
         }).then(res => {
           if (res.data === 1) {
-            this.getTableData()
+            this.loading = true
+            this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
               message: '取消成功!'
@@ -157,13 +163,14 @@ export default {
       })
     },
     refund (val) {
+      let orderId = val.id
       this.$confirm('确定要退款?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.$http.post('/order/refund', {
-          orderId: ''
+          orderId
         }).then(res => {
           if (res.data === 1) {
             this.$message({

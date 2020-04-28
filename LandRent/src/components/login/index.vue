@@ -1,6 +1,8 @@
 <template>
   <div class="main">
     <div class="content">
+
+      {{userInfo}}
       <div class="word">请登录</div>
       <div class="form">
           <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="100px" class="demo-dynamic">
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -40,7 +43,13 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   methods: {
+    ...mapMutations(['serUserInfo']),
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -51,6 +60,7 @@ export default {
             if (res.data.state === 1) {
               localStorage.setItem('useId', res.data.data.id)
               localStorage.setItem('useInfo', JSON.stringify(res.data.data))
+              this.serUserInfo(res.data.data.name)
               this.$message.success('登录成功')
               this.$router.push({
                 name: 'Home'

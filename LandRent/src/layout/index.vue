@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <HeanderTitle/>
+    <HeanderTitle :name="name"/>
     <div class="continer">
       <Menu/>
       <router-view/>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import HeanderTitle from '@/components/header-title'
 import Menu from '@/components/header-menu'
 export default {
@@ -18,6 +19,23 @@ export default {
   components: {
     HeanderTitle,
     Menu
+  },
+  data () {
+    return {
+      name: ''
+    }
+  },
+  created () {
+    let obj = localStorage.getItem('useInfo')
+    if (obj) {
+      let name = JSON.parse(obj).name
+
+      this.serUserInfo(name)
+      this.name = name
+    }
+  },
+  methods: {
+    ...mapMutations(['serUserInfo'])
   }
 }
 </script>

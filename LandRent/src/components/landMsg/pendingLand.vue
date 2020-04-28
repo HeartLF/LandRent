@@ -2,7 +2,6 @@
   <div>
     <h2 style="padding:10px 10px;color:#ff9f00">待审核土地信息</h2>
     <Table
-        :tableData="tableData"
         :tableColumns="tableLabel"
         :page="page"
         :rows="rows"
@@ -27,7 +26,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       page: 1,
       rows: 20,
       total: 100,

@@ -14,27 +14,27 @@
                     <Content :list="list"/>
                 </el-tab-pane>
                 <el-tab-pane label="林地" name="林地">
-                    <Content/>
+                    <Content :list="list"/>
                 </el-tab-pane>
                 <el-tab-pane label="农场" name="农场">
-                    <Content/>
+                    <Content :list="list"/>
                 </el-tab-pane>
                 <el-tab-pane label="农家乐" name="农家乐">
-                    <Content/>
+                    <Content :list="list"/>
                 </el-tab-pane>
                 <el-tab-pane label="宅基地" name="宅基地">
-                    <Content/>
+                    <Content :list="list"/>
                 </el-tab-pane>
             </el-tabs>
           </div>
       </div>
       <div>
-          <h3 style="margin-bottom:20px">近期热门带看</h3>
-          <Content/>
+          <h3 style="margin-bottom:20px">近期热门</h3>
+          <Content :list="recommendLandList"/>
       </div>
       <div>
           <h3 style="margin-bottom:20px">推荐好地</h3>
-          <Content/>
+          <Content :list="hotlandList"/>
       </div>
   </div>
 </div>
@@ -57,27 +57,44 @@ export default {
       activeName: '耕地',
       currentDate: new Date(),
       list: [],
-      cultivatedlandList: [], // 耕地
-      woodlandList: [], // 林地
+      recommendLandList: [], // 推荐好地
+      hotlandList: [], // 热销地
       FarmList: [], // 农场
       agritainmentList: [], // 农家乐
       homesteadList: [] // 宅基地
     }
   },
   created () {
+    // this.$router.go(0)
     this.getLandByType(this.activeName)
+    this.getRecommendLand()
+    this.gethotLand()
   },
   methods: {
     handleClick (tab, event) {
       this.getLandByType(this.activeName)
     },
     async getLandByType (type) {
-      const res = await this.$http.post('land/getLandByType', {
+      const res = await this.$http.post('/land/getLandByType', {
         type
       })
       const {data} = res
       if (data && data.state === 1) {
         this.list = data.data
+      }
+    },
+    async getRecommendLand () {
+      const res = await this.$http.post('/land/recommendLand')
+      const {data} = res
+      if (data && data.state === 1) {
+        this.recommendLandList = data.data
+      }
+    },
+    async gethotLand () {
+      const res = await this.$http.post('/land/hotLand')
+      const {data} = res
+      if (data && data.state === 1) {
+        this.hotlandList = data.data
       }
     }
   }

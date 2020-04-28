@@ -65,12 +65,14 @@ export default {
         },
         {
           label: '订单状态',
-          param: 'isAlive',
+          param: 'status',
           render: row => {
-            if (row.isAlive) {
-              return '正常订单'
+            if (row.status === 0) {
+              return '待付款'
+            } else if (row.status === 1) {
+              return '已付款'
             } else {
-              return '取消订单'
+              return '已退款'
             }
           }
         }
@@ -80,16 +82,11 @@ export default {
         label: '操作',
         options: [
           {
-            label: '删除',
-            type: 'danger',
-            icon: 'el-icon-delete',
-            methods: 'del'
-          },
-          {
             label: '重新支付',
             type: 'danger',
             icon: 'el-icon-delete',
-            methods: 'repayment'
+            methods: 'repayment',
+            ishow: true
           }
         ]
       },
@@ -138,7 +135,8 @@ export default {
           orderId: ''
         }).then(res => {
           if (res.data === 1) {
-            this.getTableData()
+            this.loading = true
+            this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
               message: '取消成功!'
@@ -158,17 +156,29 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$http.post('/order/rePay', {
-          out_trade_no: ''
-        }).then(res => {
-          if (res.data === 1) {
-            this.getTableData()
-            this.$message({
-              type: 'success',
-              message: '取消成功!'
-            })
+        this.$router.push({
+          name: 'applay',
+          query: {
+            out_trade_no: val.id
           }
         })
+        // this.$http.post('/order/rePay', {
+        //   out_trade_no: val.id
+        // }).then(res => {
+        //   if (res.data.state === 1) {
+        //     this.$router.push({
+        //       name: 'applay',
+        //       query: {
+        //         out_trade_no: this.item.id
+        //       }
+        //     })
+        //     this.getTableData()
+        //     this.$message({
+        //       type: 'success',
+        //       message: '取消成功!'
+        //     })
+        //   }
+        // })
       }).catch(() => {
         this.$message({
           type: 'info',

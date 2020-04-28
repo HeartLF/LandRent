@@ -64,12 +64,14 @@ export default {
         },
         {
           label: '订单状态',
-          param: 'isAlive',
+          param: 'status',
           render: row => {
-            if (row.isAlive) {
-              return '正常订单'
+            if (row.status === 0) {
+              return '待付款'
+            } else if (row.status === 1) {
+              return '已付款'
             } else {
-              return '取消订单'
+              return '已退款'
             }
           }
         }

@@ -15,18 +15,23 @@
         @clickButton="clickButton"
         @sortChange="sortChange"
       ></Table>
+      <contractDialog  :showModel.sync="show"/>
   </div>
 
 </template>
 
 <script>
 import Table from '@/components/table'
+import contractDialog from '@/components/contractDialog'
 export default {
   components: {
-    Table
+    Table,
+    contractDialog
   },
   data () {
     return {
+      show: true,
+      info: {},
       loading: true,
       page: 1,
       rows: 20,
@@ -70,7 +75,14 @@ export default {
             label: '删除',
             type: 'danger',
             icon: 'el-icon-delete',
-            methods: 'del'
+            methods: 'del',
+            ishow: true
+          },
+          {
+            label: '修改土地信息',
+            type: 'primary',
+            methods: 'edit',
+            ishow: true
           }
         ]
       }
@@ -121,6 +133,7 @@ export default {
           landId: val.id
         }).then(res => {
           if (res.data.state === 1) {
+            this.loading = true
             this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
@@ -134,6 +147,11 @@ export default {
         //   message: '已取消删除'
         // })
       })
+    },
+    edit (val) {
+      this.info = val
+      this.show = true
+      console.log(val)
     }
   }
 }

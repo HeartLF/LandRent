@@ -2,6 +2,7 @@
   <div>
     <h2 style="padding:10px 10px;color:#ff9f00">已支付订单</h2>
     <Table
+        ref="tableList"
         :tableData="tableData"
         :tableColumns="tableLabel"
         :page="page"
@@ -15,18 +16,22 @@
         @clickButton="clickButton"
         @sortChange="sortChange"
       ></Table>
+          <!-- <ContractDialog :item="list"  :showModel.sync="show"/> -->
   </div>
 
 </template>
 
 <script>
+import Content from '@/components/content'
 import Table from '@/components/table'
 export default {
   components: {
-    Table
+    Table,
+    Content
   },
   data () {
     return {
+      show: false,
       loading: true,
       page: 1,
       rows: 20,
@@ -41,8 +46,8 @@ export default {
           label: '创建时间',
           param: 'createTime',
           render: row => {
-            let time = new Date().getTime()
-            let date = new Date(time)
+            // let time = new Date().getTime()
+            let date = new Date(row.createTime)
             return date.toLocaleString()
           }
         },
@@ -61,16 +66,18 @@ export default {
         },
         {
           label: '支付宝流水号',
-          param: 'tradeNO'
+          param: 'tradeNo'
         },
         {
           label: '订单状态',
-          param: 'isAlive',
+          param: 'status',
           render: row => {
-            if (row.isAlive) {
-              return '正常订单'
+            if (row.status === 0) {
+              return '待付款'
+            } else if (row.status === 1) {
+              return '已付款'
             } else {
-              return '取消订单'
+              return '已退款'
             }
           }
         }
@@ -80,23 +87,21 @@ export default {
         label: '操作',
         options: [
           {
-            label: '删除',
+            label: '退款',
             type: 'danger',
             icon: 'el-icon-delete',
-            methods: 'del'
+            methods: 'refundOrder'
+          },
+          {
+            label: '查看合同',
+            type: 'primary',
+            methods: 'handClick'
           }
         ]
       },
       // 表格数据
       tableData: []
     }
-  },
-  created () {
-    // this.$http.post('/order/getSuccessOrder', {
-    //   'userId': +localStorage.getItem('useId')
-    // }).then(res => {
-    //   this.tableData = res.data.data
-    // })
   },
   methods: {
     // 切换当前一页展示多少条
@@ -118,9 +123,41 @@ export default {
     sortChange (val) {
       console.log(val)
     },
-    del (val) {
+    refundOrder (val) {
       // 我是删除
-      console.log(val)
+      let orderId = val.id
+      this.$confirm('确定要退款?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.loading = false
+        this.$http.post('/order/refund', {
+          orderId
+        }).then(res => {
+          console.log(res)
+          if (res.data.state === 1) {
+            // this.$refs.tableList.getTableData()
+            this.$message({
+              type: 'success',
+              message: '退款成功'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    handClick () {
+      this.show = true
     }
   }
 }

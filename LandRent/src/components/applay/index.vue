@@ -1,6 +1,6 @@
 
 <template>
-    <div class="pay" v-loading="loading">
+    <div class="pay" >
     </div>
 </template>
 
@@ -14,13 +14,20 @@ export default {
     }
   },
   created () {
-    let landId = this.$route.query.id
-    this.$http.post('/order/pay', {
-      'userId': +localStorage.getItem('useId'),
-      landId
-    }).then(res => {
-      document.write(res.data)
-    })
+    let landId = +this.$route.query.id
+    let tradeId = this.$route.query.out_trade_no
+    if (landId) {
+      console.log(landId)
+      this.orderPay(landId)
+    } else {
+      this.orderRepay(tradeId)
+    }
+    // this.$http.post('/order/pay', {
+    //   'userId': +localStorage.getItem('useId'),
+    //   landId
+    // }).then(res => {
+    //   document.write(res.data)
+    // })
   }, // recharge(obj).then(response => {
   //   if (response.data.status !== 200) {
   //     return this.tipWarning(response.data.msg)
@@ -37,6 +44,21 @@ export default {
 
   },
   methods: {
+    orderPay (landId) {
+      this.$http.post('/order/pay', {
+        'userId': +localStorage.getItem('useId'),
+        landId
+      }).then(res => {
+        document.write(res.data)
+      })
+    },
+    orderRepay (tradeId) {
+      this.$http.post('/order/rePay', {
+        'out_trade_no': tradeId
+      }).then(res => {
+        document.write(res.data)
+      })
+    }
   }
 }
 </script>

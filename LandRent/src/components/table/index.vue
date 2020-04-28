@@ -39,6 +39,7 @@
         <template slot-scope="scope">
           <el-button
             v-for="(item, index) in tableOption.options"
+            v-show="(scope.row.status===1||item.ishow)"
             :key="index"
             :type="item.type"
             :icon="item.icon"

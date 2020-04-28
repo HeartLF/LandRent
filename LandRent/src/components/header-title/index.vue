@@ -34,8 +34,9 @@
               </ul>
           </div>
           <div class="login">
-            <span v-show="islogin" @click="login">{{useInfo.name?useInfo.name:'请登录 |'}}</span>
-            <span v-show="isregister" @click="register">注册</span>
+            <span  @click="login">{{userInfoName?userInfoName:'请登录 |'}}</span>
+            <span v-if="userInfoName"  @click="logout" style="padding-left:10px;color:red">退出登录</span>
+            <span v-else @click="register">注册</span>
           </div>
         </div>
         <Search/>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import Menu from '../header-menu/index.vue'
 import Search from '../header-search/index.vue'
 export default {
@@ -53,10 +55,20 @@ export default {
     Menu,
     Search
   },
+  props: {
+    name: {
+      type: String,
+      default: ''
+    }
+  },
   computed: {
+    ...mapState(['userInfoName']),
     useInfo () {
-      console.log(JSON.stringify(localStorage.getItem('useInfo')))
-      return localStorage.getItem('useInfo')
+      let obj = localStorage.getItem('useInfo')
+      if (obj) {
+        return JSON.parse(obj).name
+      }
+      return ''
     }
   },
   data () {
@@ -65,13 +77,29 @@ export default {
       isregister: true
     }
   },
+  created () {
+    // this.serUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+  },
   methods: {
+    ...mapMutations(['serUserInfo']),
     login () {
-      console.log(1111)
       this.$router.push({name: 'Login'})
     },
     register () {
       this.$router.push({name: 'Register'})
+    },
+    logout () {
+      this.$http.post('/user/logout').then(res => {
+        console.log(res)
+        if (res.data.state === 1) {
+          localStorage.clear()
+          this.useInfo = ''
+          this.$message.success(res.data.message)
+          this.$router.go(0)
+        } else {
+          this.$message.success(res.data.message)
+        }
+      })
     }
   }
 }

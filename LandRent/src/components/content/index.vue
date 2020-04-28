@@ -3,7 +3,7 @@
     <el-col :span="5" v-for="(item,index) in list" :key="index"  :offset="1" style="margin-bottom:20px">
         <el-card shadow="always" :body-style="{ padding: '0px' }" >
             <div @click="handleClick(item)">
-                <img :src="'http://123.57.237.81'+item.image" class="image">
+                <img :src="'http://123.57.237.81'+item.images[0]" class="image">
                 <div class="text" >
                     <h4>{{item.title }}</h4>
                     <div class="bottom clearfix">

@@ -3,9 +3,9 @@
     <div class="box" style="overflow:hidden">
         <div class="item fl">
             <el-carousel trigger="click" height="345px">
-                <el-carousel-item v-for="item in 4" :key="item">
+                <el-carousel-item v-for="item in list.images" :key="item">
                 <el-image
-                    src="https://img2s.tuliu.com/lands/2020/04/13/5e2207d0-3f6c-0126-51ff-5777dbf49cfc.jpg?x-oss-process=style/center_big"
+                    :src="'http://123.57.237.81'+item"
                     fit="fit"></el-image>
                 </el-carousel-item>
             </el-carousel>
@@ -77,7 +77,7 @@ export default {
     return {
       value1: '',
       show: false,
-      list: [],
+      list: {},
       isshow: true
     }
   },

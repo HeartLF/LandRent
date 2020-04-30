@@ -72,6 +72,10 @@
                     </el-form-item>
                     <el-form-item label="验证码" prop="phoneCode" >
                         <el-input v-model="form.phoneCode"></el-input>
+                        <el-button style="margin-top:10px" icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show">
+                    <span v-show="show">获取验证码</span>
+                    <span v-show="!show">{{count}} s</span>
+                </el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button class="btn" @click="beforeBtn">上一步</el-button>
@@ -83,7 +87,8 @@
         <div class="finish" v-show="showFinish">
             <div class="msg">
                 <i  :class="[showIcon?'el-icon-success ':'el-icon-error col']"></i>
-                <p>信息发布成功</p>
+                <p>{{title}}</p>
+                <el-button class="btn" @click="beforeBtn">上一步</el-button>
             </div>
 
         </div>
@@ -103,17 +108,23 @@
 </template>
 
 <script>
+
 import { regionData, CodeToText } from 'element-china-area-data'
+const TIME_COUNT = 60 // 更改倒计时时间
 export default {
   name: 'MsgSteps',
   data () {
     return {
+      show: true, // 初始启用按钮
+      count: '', // 初始化次数
       active: 1,
       type: '',
+      title: '信息发布成功',
       showType: true,
       showContent: false,
       showFinish: false,
       showIcon: true,
+      fileArray: '',
       form: {
         region: '',
         address: '',
@@ -170,23 +181,75 @@ export default {
       fileList: []
     }
   },
+  computed: {
+    params () {
+      return {
+        images: this.fileList,
+        type: this.type,
+        region: this.form.region,
+        address: this.form.address,
+        area: this.form.area,
+        price: this.form.price,
+        title: this.form.title,
+        years: this.form.years,
+        description: this.form.description,
+        person: this.form.person,
+        phone: this.form.phone,
+        imageCode: this.form.imageCode,
+        phoneCode: this.form.phoneCode
+      }
+    }
+  },
+  watch: {
+    $route: (to, from) => {
+      console.log(1111)
+      if (this.$route.query.landId) {
+        console.log(this.$route.query.landId)
+      } else {
+        console.log(111)
+      }
+    }
+  },
   created () {
+    if (this.$route.query.landId) {
+      let landId = this.$route.query.landId
+      this.getLandDetail(landId)
+    }
     this.changeImage()
   },
   methods: {
+    async getLandDetail (landId) {
+      const res = await this.$http.post('/land/getLandById', {
+        landId
+      })
+      const {data} = res
+      if (data && data.state === 1) {
+        this.type = data.data.type
+        this.form.region = data.data.region
+        this.form.address = data.data.address
+        this.form.area = data.data.area
+        this.form.price = data.data.price
+        this.form.title = data.data.title
+        this.form.years = data.data.years
+        this.form.description = data.data.description
+        this.form.person = data.data.person
+        this.form.phone = data.data.phone
+      }
+    },
     handleChange (value) {
       this.form.region = CodeToText[value[0]] + CodeToText[value[1]] + CodeToText[value[2]]
-      console.log(this.form.region)
-      // console.log(value) // value值为区域码
-      // // 用CodeToText转换成中文
-      // console.log(CodeToText[value[0]])
-      // console.log(CodeToText[value[1]])
-      // console.log(CodeToText[value[2]])
     },
     beforeBtn () {
-      this.showType = true
-      this.showContent = false
-      this.active = 1
+      if (this.active === 3) {
+        this.showFinish = false
+        this.showType = false
+        this.showContent = true
+        this.active = 2
+      } else {
+        this.showType = true
+        this.showContent = false
+        this.active = 1
+      }
     },
     nextBtn () {
       if (!this.type) {
@@ -216,34 +279,64 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.form.type = this.type
-          // const params = JSON.stringify(this.form)
-          this.$http.post('/land/add', {
-            userId: localStorage.getItem('useId'),
-            images: this.fileList,
-            type: this.type,
-            region: this.form.region,
-            address: this.form.address,
-            area: this.form.area,
-            price: this.form.price,
-            title: this.form.title,
-            years: this.form.years,
-            description: this.form.description,
-            person: this.form.person,
-            phone: this.form.phone,
-            imageCode: this.form.imageCode,
-            phoneCode: this.form.phoneCode
-          }).then(res => {
-            if (res && res.state === 1) {
+          if (this.$route.query.landId) {
+            this.$http.post('/land/alter', {
+              id: this.$route.query.landId,
+              ...this.params
+            }).then(res => {
+              if (res.data.state === 1) {
+                this.title = '信息发布成功'
+              } else {
+                this.title = res.data.message
+              }
+              this.active = 3
               this.showFinish = true
               this.showType = false
               this.showContent = false
-            }
-          })
+            })
+          } else {
+            this.$http.post('/land/add', {
+              userId: localStorage.getItem('useId'),
+              ...this.params
+            }).then(res => {
+              if (res.data.state === 1) {
+                this.title = '信息发布成功'
+              } else {
+                this.title = res.data.message
+              }
+              this.active = 3
+              this.showFinish = true
+              this.showType = false
+              this.showContent = false
+            })
+          }
         } else {
           return false
         }
       })
+    },
+    send () {
+      // msgCode(this.form.phone).then(res => {
+      //   console.log(res)
+      // })
+      this.$http.post('/SMS/send', {'phone': this.form.phone}).then(res => {
+        console.log(res)
+      }).catch(err => {
+        this.$message.error(err)
+      })
+      if (!this.timer) {
+        this.count = TIME_COUNT
+        this.show = false
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--
+          } else {
+            this.show = true
+            clearInterval(this.timer) // 清除定时器
+            this.timer = null
+          }
+        }, 1000)
+      }
     }
   }
 }
@@ -307,4 +400,15 @@ export default {
                 color #FF9F00
             .col
                 color red
+            .btn
+                width: 140px
+                height: 47px
+                padding: 0
+                border: 0
+                border-radius: 6px
+                font-size: 20px
+                line-height: 47px
+                background #FF9F00
+                box-shadow 0 2px 0 #C8631D
+                color #fff
 </style>

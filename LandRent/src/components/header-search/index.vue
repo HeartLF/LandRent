@@ -11,17 +11,12 @@
         <div class="search fr">
             <div class="search_item">
                 <div class="fl">
-                    <el-input placeholder="请输入内容" v-model="input3"  class="input-with-select">
-                        <el-select v-model="select" slot="prepend" placeholder="请选择">
-                            <el-option label="土地" value="1"></el-option>
-                            <el-option label="租房" value="2"></el-option>
-                        </el-select>
-                        <el-button slot="append">搜索</el-button>
+                    <el-input placeholder="请输入内容" v-model="input3">
+                    <el-button slot="append" @click="search">搜索</el-button>
                     </el-input>
                 </div>
                 <div class="btn fl">
                     <el-button type="primary" @click="sendMsg">发布土地信息</el-button>
-                    <el-button type="primary">发布租房信息</el-button>
                 </div>
             </div>
 
@@ -31,6 +26,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: 'search',
   data () {
@@ -42,8 +38,19 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setActiveIndex']),
     sendMsg () {
       this.$router.push({name: 'MsgStep'})
+    },
+    search () {
+      this.$router.push({
+        name: 'Land',
+        query: {
+          key: this.input3
+        }
+      })
+      localStorage.setItem('menuItem', '/land')
+      this.setActiveIndex('/land')
     }
   }
 }

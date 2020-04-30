@@ -9,8 +9,7 @@
         :rows="rows"
         :total="total"
         :loading="loading"
-        :tableOption="tableOption"
-         sourceUrl="/order/getAllOrder"
+        sourceUrl="/order/getAllOrder"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
@@ -42,17 +41,15 @@ export default {
           label: '创建时间',
           param: 'createTime',
           render: row => {
-            // let time = new Date().getTime()
             let date = new Date(row.createTime)
             return date.toLocaleString()
           }
         },
         {
           label: '支付时间',
-          param: 'paytime',
+          param: 'payTime',
           render: row => {
-            // let time = new Date().getTime()
-            let date = new Date(row.paytime)
+            let date = new Date(row.payTime)
             return date.toLocaleString()
           }
         },
@@ -62,7 +59,7 @@ export default {
         },
         {
           label: '支付宝流水号',
-          param: 'tradeNO'
+          param: 'tradeNo'
         },
         {
           label: '订单状态',
@@ -78,26 +75,6 @@ export default {
           }
         }
       ],
-      // 表格操作
-      tableOption: {
-        label: '操作',
-        options: [
-          {
-            label: '取消订单',
-            type: 'danger',
-            icon: 'el-icon-delete',
-            methods: 'delOrder',
-            ishow: true
-          },
-          {
-            label: '退款',
-            type: 'danger',
-            icon: 'el-icon-delete',
-            methods: 'refund',
-            ishow: false
-          }
-        ]
-      },
       // 表格数据
       tableData: []
     }

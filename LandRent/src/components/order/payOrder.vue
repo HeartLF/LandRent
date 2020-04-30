@@ -53,10 +53,9 @@ export default {
         },
         {
           label: '支付时间',
-          param: 'paytime',
+          param: 'payTime',
           render: row => {
-            let time = new Date().getTime()
-            let date = new Date(time)
+            let date = new Date(row.payTime)
             return date.toLocaleString()
           }
         },

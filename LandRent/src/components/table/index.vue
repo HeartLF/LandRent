@@ -53,7 +53,7 @@
     </el-table>
     <!-- 表格结束 -->
     <!-- 翻页 -->
-    <el-pagination
+    <!-- <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="page"
@@ -62,7 +62,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     >
-    </el-pagination>
+    </el-pagination> -->
   </div>
 </template>
 

@@ -7,15 +7,26 @@
 </template>
 
 <script>
+import {mapState, mapMutations} from 'vuex'
 export default {
   data () {
     return {
-      activeIndex: '/home'
+      // activeIndex: '/home'
     }
   },
+  computed: {
+    ...mapState(['activeIndex'])
+  },
   methods: {
+    ...mapMutations(['setActiveIndex', 'setIshow']),
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
+      localStorage.setItem('menuItem', key)
+      this.setActiveIndex(key)
+      if (key === '/personal') {
+        this.setIshow(false)
+      } else {
+        this.setIshow(true)
+      }
     }
   }
 }

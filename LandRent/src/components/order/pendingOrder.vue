@@ -41,17 +41,16 @@ export default {
           label: '创建时间',
           param: 'createTime',
           render: row => {
-            let time = new Date().getTime()
-            let date = new Date(time)
+            let date = new Date(row.createTime)
             return date.toLocaleString()
           }
         },
         {
           label: '支付时间',
-          param: 'paytime',
+          param: 'payTime',
           render: row => {
-            let time = new Date().getTime()
-            let date = new Date(time)
+            // let time = new Date().getTime()
+            let date = new Date(row.payTime)
             return date.toLocaleString()
           }
         },
@@ -61,7 +60,7 @@ export default {
         },
         {
           label: '支付宝流水号',
-          param: 'tradeNO'
+          param: 'tradeNo'
         },
         {
           label: '订单状态',
@@ -86,6 +85,12 @@ export default {
             type: 'danger',
             icon: 'el-icon-delete',
             methods: 'repayment',
+            ishow: true
+          },
+          {
+            label: '查看合同',
+            type: 'primary',
+            methods: 'toContract',
             ishow: true
           }
         ]
@@ -184,6 +189,15 @@ export default {
           type: 'info',
           message: '已取消删除'
         })
+      })
+    },
+    toContract (val) {
+      this.$router.push({
+        name: 'contractItem',
+        query: {
+          landId: val.landId,
+          createTime: val.createTime
+        }
       })
     }
   }

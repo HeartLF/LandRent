@@ -33,6 +33,10 @@
                     <span style="color:#999">土地地点</span>
                     <span>{{`${list.region}${list.address}`}}</span>
                 </p>
+                <p class="fl" style="padding-top:20px">
+                    <span style="color:#999">总价</span>
+                    <span>{{+`${list.price}`*+`${list.years}`}}元</span>
+                </p>
                 <p class="fl" style="margin-top:30px">
                     <el-button @click="handClick" style="widthL170px;height:44px;background-color: #ff4600;color:#fff">立即签约</el-button>
                 </p>
@@ -59,7 +63,7 @@
     </div>
     <div>
         <h3>优质地源推荐</h3>
-        <Content style="margin-top:10px"/>
+        <Content :list="recommendLandList" style="margin-top:10px" />
     </div>
     <ContractDialog :item="list"  :showModel.sync="show"/>
   </div>
@@ -78,11 +82,13 @@ export default {
       value1: '',
       show: false,
       list: {},
-      isshow: true
+      isshow: true,
+      recommendLandList: []
     }
   },
   created () {
     this.getLandInfo(this.$route.params.id)
+    this.getRecommendLand()
   },
   methods: {
     handClick () {
@@ -103,6 +109,13 @@ export default {
     },
     check () {
       this.isshow = false
+    },
+    async getRecommendLand () {
+      const res = await this.$http.post('/land/recommendLand')
+      const {data} = res
+      if (data && data.state === 1) {
+        this.recommendLandList = data.data
+      }
     }
   }
 }

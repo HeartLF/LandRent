@@ -149,9 +149,15 @@ export default {
       })
     },
     edit (val) {
-      this.info = val
-      this.show = true
-      console.log(val)
+      this.$router.push({
+        name: 'MsgStep',
+        query: {
+          landId: val.id
+        }
+      })
+      // this.info = val
+      // this.show = true
+      // console.log(val)
     }
   }
 }

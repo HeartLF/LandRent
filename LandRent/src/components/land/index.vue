@@ -46,7 +46,7 @@
       <div class="main">
         <h3>热门地区土地信息</h3>
         <div>
-          <span class="item" v-for="(item,index) in hotCity" :key="index">{{item.name}}</span>
+          <span class="item" v-for="(item,index) in hotCity" :key="index" @click="handClick(item)">{{item.name}}</span>
         </div>
       </div>
   </div>
@@ -61,8 +61,9 @@ export default {
   },
   data () {
     return {
+      count: 0,
       form: {
-        'region': '',
+        'region': '全部',
         'type': '',
         'area': '',
         'years': ''
@@ -72,21 +73,39 @@ export default {
       list: []
     }
   },
+  computed: {
+    test () {
+      return this.$route.query.key
+    },
+    region () {
+      return this.form.region
+    },
+    type () {
+      return this.form.type
+    },
+    area () {
+      return this.form.area
+    },
+    years () {
+      return this.form.years
+    }
+  },
   watch: {
     form: {
       async handler (val) {
-        // console.log(yearsItem, areaItem)
-
-        const result = await this.$http.post('/land/getByLabel', {
-          'region': val.region ? val.region : null,
-          'type': val.type ? val.type : null,
-          'area': val.area ? val.area.split('~').map(Number) : null,
-          'years': val.years ? val.area.split('~').map(Number) : null
-        })
-        if (result) {
-          const {data} = result
-          this.list = data.content
+        if (!this.count) {
+          this.search(this.test)
+        } else {
+          this.getByLabel(val)
         }
+        this.count++
+      },
+      immediate: true,
+      deep: true
+    },
+    test: {
+      handler (val) {
+        this.search(val)
       },
       immediate: true,
       deep: true
@@ -96,17 +115,50 @@ export default {
     this.$http.get('/static/city.json').then(res => {
       this.allCity = res.data
       this.hotCity = res.data.slice(Math.floor(Math.random() * 10))
+      this.allCity.unshift({
+        name: '全部'
+      })
     })
+    this.getByLabel(this.form)
+  },
+  mounted () {
+
   },
   methods: {
-    async getByLabel (params) {
+    async getByLabel (val) {
+      let regin = val.region
+      if (regin === '全部') {
+        regin = null
+      }
       const result = await this.$http.post('/land/getByLabel', {
-        ...params
+        'region': regin || null,
+        'type': val.type ? val.type : null,
+        'area': val.area ? val.area.split('~').map(Number) : null,
+        'years': val.years ? val.area.split('~').map(Number) : null
       })
       if (result) {
         const {data} = result
-        console.log(data)
+        this.list = data.content
+        console.log(this.list)
       }
+    },
+    async handClick (item) {
+      let top = document.documentElement.scrollTop || document.body.scrollTop
+      const timeTop = setInterval(() => {
+        document.body.scrollTop = document.documentElement.scrollTop = top -= 50
+        if (top <= 0) {
+          clearInterval(timeTop)
+        }
+      }, 10)
+      this.form.region = item.name
+    },
+    async search (key) {
+      const result = await this.$http.post('/land/findLand', {
+        key
+      })
+      const {data} = result
+      this.list = data.data
+      console.log(this.list)
     }
   }
 }

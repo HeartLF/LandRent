@@ -4,19 +4,19 @@ import Vue from 'vue'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
-    userInfoName: '123'
+    userInfoName: '123',
+    activeIndex: '/home',
+    ishow: true
   },
   mutations: {
     serUserInfo (state, name) {
-      console.log(name)
-      // let obj = localStorage.getItem('userInfo')
-      // console.log(localStorage.getItem('userInfo'))
-      // if (obj) {
       state.userInfoName = name
-      //   console.log(state)
-      // } else {
-      //   state.userInfo = ''
-      // }
+    },
+    setActiveIndex (state, index) {
+      state.activeIndex = index
+    },
+    setIshow (state, ishow) {
+      state.ishow = ishow
     }
   }
 })

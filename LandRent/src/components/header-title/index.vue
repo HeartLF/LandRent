@@ -90,9 +90,9 @@ export default {
     },
     logout () {
       this.$http.post('/user/logout').then(res => {
-        console.log(res)
         if (res.data.state === 1) {
-          localStorage.clear()
+          localStorage.setItem('useInfo', '')
+          this.serUserInfo('')
           this.useInfo = ''
           this.$message.success(res.data.message)
           this.$router.go(0)

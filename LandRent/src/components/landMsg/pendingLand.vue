@@ -8,6 +8,7 @@
         :total="total"
         :loading="loading"
         :tableOption="tableOption"
+        :params="userInfoName"
          sourceUrl="/land/uncheckedLand"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import Table from '@/components/table'
 export default {
   components: {
@@ -60,20 +62,23 @@ export default {
           label: '标题',
           param: 'title'
         }
-      ],
+      ]
       // 表格操作
-      tableOption: {
-        label: '操作',
-        options: [
-          {
-            label: '删除',
-            type: 'danger',
-            icon: 'el-icon-delete',
-            methods: 'del'
-          }
-        ]
-      }
+      // tableOption: {
+      //   label: '操作',
+      //   options: [
+      //     {
+      //       label: '删除',
+      //       type: 'danger',
+      //       icon: 'el-icon-delete',
+      //       methods: 'del'
+      //     }
+      //   ]
+      // }
     }
+  },
+  computed: {
+    ...mapState(['userInfoName'])
   },
   methods: {
     // getTableData () {

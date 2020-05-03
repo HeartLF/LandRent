@@ -35,7 +35,7 @@
                 </p>
                 <p class="fl" style="padding-top:20px">
                     <span style="color:#999">总价</span>
-                    <span>{{+`${list.price}`*+`${list.years}`}}元</span>
+                    <span>{{+`${list.price}`*+`${list.area}`*+`${list.years}`}}元</span>
                 </p>
                 <p class="fl" style="margin-top:30px">
                     <el-button @click="handClick" style="widthL170px;height:44px;background-color: #ff4600;color:#fff">立即签约</el-button>
@@ -66,16 +66,19 @@
         <Content :list="recommendLandList" style="margin-top:10px" />
     </div>
     <ContractDialog :item="list"  :showModel.sync="show"/>
+     <Footer style="margin-top:20px"/>
   </div>
 </template>
 
 <script>
 import Content from '@/components/content'
+import Footer from '@/components/footer'
 import ContractDialog from '@/components/contract'
 export default {
   components: {
     Content,
-    ContractDialog
+    ContractDialog,
+    Footer
   },
   data () {
     return {

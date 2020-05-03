@@ -6,8 +6,7 @@
       v-loading="vLoading"
       element-loading-text="加载中"
       :data="tableData"
-      border
-      stripe
+      highlight-current-row
       style="width: 100%"
       @sort-change="handleSortChange"
     >
@@ -34,6 +33,7 @@
         :label="tableOption.label"
         align="center"
         width="300"
+        fixed="right"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
@@ -74,13 +74,16 @@ export default {
       type: Boolean,
       default: true
     },
-    // tableData: {
-    //   // 表格数据
-    //   type: Array,
-    //   default: () => {
-    //     return []
-    //   }
-    // },
+    flag: {
+      type: Boolean,
+      default: true
+    },
+    params: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     sourceUrl: {
       type: String,
       default: ''
@@ -132,14 +135,35 @@ export default {
   },
   methods: {
     getTableData () {
-      this.$http.post(this.sourceUrl, {
-        userId: +localStorage.getItem('useId')
-      }).then(res => {
-        if (res && res.data.state === 1) {
-          this.tableData = res.data.data
-          this.vLoading = false
-        }
-      })
+      this.vLoading = true
+      if (!this.flag) {
+        this.$http.post(this.sourceUrl).then(res => {
+          if (res && res.data.state === 1) {
+            this.tableData = res.data.data
+            this.vLoading = false
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
+          }
+        })
+      } else {
+        this.$http.post(this.sourceUrl, {
+          ...this.params,
+          userId: +localStorage.getItem('useId')
+        }).then(res => {
+          if (res && res.data.state === 1) {
+            this.tableData = res.data.data
+            this.vLoading = false
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
+          }
+        })
+      }
     },
     // 切换当前一页展示多少条
     handleSizeChange (val) {
@@ -163,17 +187,17 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.table {
-  margin-top: 10px;
-}
-.el-table {
-  margin: 10px 0;
-  & td,
-  & th {
-    text-align: center;
-  }
-}
-.el-pagination {
-  text-align: right;
-}
+// .table {
+//   margin-top: 10px;
+// }
+// .el-table {
+//   margin: 10px 0;
+//   & td,
+//   & th {
+//     text-align: center;
+//   }
+// }
+// .el-pagination {
+//   text-align: right;
+// }
 </style>

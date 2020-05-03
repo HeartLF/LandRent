@@ -42,6 +42,19 @@
       </el-form>
       <div>
         <Content :list="list"/>
+        <div style="margin:10px 20px;text-align:center">
+            <!-- 翻页 -->
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="pageNum"
+            :page-sizes="[12, 16, 20, 24]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+          >
+          </el-pagination>
+        </div>
+
       </div>
       <div class="main">
         <h3>热门地区土地信息</h3>
@@ -49,15 +62,18 @@
           <span class="item" v-for="(item,index) in hotCity" :key="index" @click="handClick(item)">{{item.name}}</span>
         </div>
       </div>
+      <Footer/>
   </div>
 </template>
 
 <script>
 import Content from '@/components/content'
+import Footer from '@/components/footer'
 export default {
   name: 'Land',
   components: {
-    Content
+    Content,
+    Footer
   },
   data () {
     return {
@@ -70,7 +86,10 @@ export default {
       },
       allCity: '',
       hotCity: '',
-      list: []
+      list: [],
+      pageNum: 1,
+      total: 0,
+      pageSize: 12
     }
   },
   computed: {
@@ -126,11 +145,19 @@ export default {
   },
   methods: {
     async getByLabel (val) {
+      const loading = this.$loading({
+        lock: true,
+        text: '正在加载中'
+        // spinner: 'el-icon-loading',
+        // background: 'rgba(0, 0, 0, 0.7)'
+      })
       let regin = val.region
       if (regin === '全部') {
         regin = null
       }
       const result = await this.$http.post('/land/getByLabel', {
+        'pageSize': this.pageSize,
+        'pageNum': this.pageNum,
         'region': regin || null,
         'type': val.type ? val.type : null,
         'area': val.area ? val.area.split('~').map(Number) : null,
@@ -139,7 +166,9 @@ export default {
       if (result) {
         const {data} = result
         this.list = data.content
-        console.log(this.list)
+        this.total = data.totalSize
+
+        loading.close()
       }
     },
     async handClick (item) {
@@ -158,7 +187,16 @@ export default {
       })
       const {data} = result
       this.list = data.data
-      console.log(this.list)
+    },
+    // 切换当前一页展示多少条
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.getByLabel(this.form)
+    },
+    // 翻页
+    handleCurrentChange (val) {
+      this.pageNum = val
+      this.getByLabel(this.form)
     }
   }
 }

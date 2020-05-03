@@ -1,37 +1,37 @@
 <template>
   <div>
-    <h2 style="padding:10px 10px;color:#ff9f00">已支付订单</h2>
+    <h2 style="padding:10px 10px;color:#ff9f00;text-align:left">已发布土地信息</h2>
     <Table
         ref="tableList"
-        :tableData="tableData"
         :tableColumns="tableLabel"
         :page="page"
         :rows="rows"
         :total="total"
         :loading="loading"
         :tableOption="tableOption"
-        sourceUrl="/order/getSuccessOrder"
+         sourceUrl="/land/userAllLand"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
         @sortChange="sortChange"
       ></Table>
-          <!-- <ContractDialog :item="list"  :showModel.sync="show"/> -->
+      <contractDialog  :showModel.sync="show"/>
   </div>
 
 </template>
 
 <script>
-import Content from '@/components/content'
 import Table from '@/components/table'
+import contractDialog from '@/components/contractDialog'
 export default {
   components: {
     Table,
-    Content
+    contractDialog
   },
   data () {
     return {
-      show: false,
+      show: true,
+      info: {},
       loading: true,
       page: 1,
       rows: 20,
@@ -39,50 +39,32 @@ export default {
       // 表头数据
       tableLabel: [
         {
-          label: '订单编号',
-          param: 'id',
-          width: '200'
+          label: 'id',
+          param: 'id'
         },
         {
-          label: '创建时间',
-          param: 'createTime',
-          width: '200',
-          render: row => {
-            // let time = new Date().getTime()
-            let date = new Date(row.createTime)
-            return date.toLocaleString()
-          }
+          label: '姓名',
+          param: 'person'
         },
         {
-          label: '支付时间',
-          param: 'payTime',
-          width: '200',
-          render: row => {
-            let date = new Date(row.payTime)
-            return date.toLocaleString()
-          }
+          label: '地址',
+          param: 'region'
         },
         {
-          label: '支付金额',
-          param: 'payment'
+          label: '详细地址',
+          param: 'address'
         },
         {
-          label: '支付宝流水号',
-          param: 'tradeNo',
-          width: '200'
+          label: '面积',
+          param: 'area'
         },
         {
-          label: '订单状态',
-          param: 'status',
-          render: row => {
-            if (row.status === 0) {
-              return '待付款'
-            } else if (row.status === 1) {
-              return '已付款'
-            } else {
-              return '已退款'
-            }
-          }
+          label: '价格/亩',
+          param: 'price'
+        },
+        {
+          label: '标题',
+          param: 'title'
         }
       ],
       // 表格操作
@@ -90,23 +72,33 @@ export default {
         label: '操作',
         options: [
           {
-            label: '退款',
+            label: '删除',
             type: 'danger',
             icon: 'el-icon-delete',
-            methods: 'refundOrder'
+            methods: 'del',
+            ishow: true
           },
           {
-            label: '查看合同',
+            label: '修改土地信息',
             type: 'primary',
-            methods: 'handClick'
+            methods: 'edit',
+            ishow: true
           }
         ]
-      },
-      // 表格数据
-      tableData: []
+      }
     }
   },
   methods: {
+    getTableData () {
+      this.$http.post('/land/userAllLand', {
+        userId: +localStorage.getItem('useId')
+      }).then(res => {
+        let {data} = res
+        if (data.state === 1) {
+          this.tableData = data.data
+        }
+      })
+    },
     // 切换当前一页展示多少条
     sizeChange (val) {
       this.rows = val
@@ -126,22 +118,22 @@ export default {
     sortChange (val) {
       console.log(val)
     },
-    refundOrder (val) {
+    del (val) {
       // 我是删除
-      let orderId = val.id
-      this.$confirm('确定要退款?', '提示', {
+      this.$confirm('确定要删除该土地吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$http.post('/order/refund', {
-          orderId
+        this.$http.post('/land/delById', {
+          landId: val.id
         }).then(res => {
           if (res.data.state === 1) {
+            this.loading = true
             this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
-              message: '退款成功'
+              message: '取消成功!'
             })
           } else {
             this.$message({
@@ -152,8 +144,13 @@ export default {
         })
       })
     },
-    handClick () {
-      this.show = true
+    edit (val) {
+      this.$router.push({
+        name: 'MsgStep',
+        query: {
+          landId: val.id
+        }
+      })
     }
   }
 }

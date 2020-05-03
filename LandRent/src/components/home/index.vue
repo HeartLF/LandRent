@@ -37,15 +37,18 @@
           <Content :list="hotlandList"/>
       </div>
   </div>
+  <Footer style="margin-top:20px"/>
 </div>
 </template>
 
 <script>
 import Content from '@/components/content'
+import Footer from '@/components/footer'
 export default {
   name: 'Home',
   components: {
-    Content
+    Content,
+    Footer
   },
   data () {
     return {

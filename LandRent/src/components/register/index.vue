@@ -93,6 +93,9 @@ export default {
             }).then(res => {
               if (res.data.state === 1) {
                 this.$message.success('注册成功')
+                this.$router.push({
+                  name: 'Login'
+                })
               } else {
                 this.$message.success(res.data.message)
               }

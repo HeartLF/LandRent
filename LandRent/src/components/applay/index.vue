@@ -17,7 +17,6 @@ export default {
     let landId = +this.$route.query.id
     let tradeId = this.$route.query.out_trade_no
     if (landId) {
-      console.log(landId)
       this.orderPay(landId)
     } else {
       this.orderRepay(tradeId)
@@ -45,17 +44,31 @@ export default {
   },
   methods: {
     orderPay (landId) {
+      const loading = this.$loading({
+        lock: true,
+        text: '正在加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.$http.post('/order/pay', {
         'userId': +localStorage.getItem('useId'),
         landId
       }).then(res => {
+        loading.close()
         document.write(res.data)
       })
     },
     orderRepay (tradeId) {
+      const loading = this.$loading({
+        lock: true,
+        text: '正在加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.$http.post('/order/rePay', {
         'out_trade_no': tradeId
       }).then(res => {
+        loading.close()
         document.write(res.data)
       })
     }

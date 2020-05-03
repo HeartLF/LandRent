@@ -35,11 +35,13 @@ export default {
       tableLabel: [
         {
           label: '订单编号',
-          param: 'id'
+          param: 'id',
+          width: '200'
         },
         {
           label: '创建时间',
           param: 'createTime',
+          width: '200',
           render: row => {
             let date = new Date(row.createTime)
             return date.toLocaleString()
@@ -48,6 +50,7 @@ export default {
         {
           label: '支付时间',
           param: 'payTime',
+          width: '200',
           render: row => {
             let date = new Date(row.payTime)
             return date.toLocaleString()
@@ -59,7 +62,8 @@ export default {
         },
         {
           label: '支付宝流水号',
-          param: 'tradeNo'
+          param: 'tradeNo',
+          width: '200'
         },
         {
           label: '订单状态',
@@ -111,57 +115,6 @@ export default {
     // 排序
     sortChange (val) {
       console.log(val)
-    },
-    delOrder (val) {
-      let orderId = val.id
-      // 我是删除
-      this.$confirm('确定取消订单?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$http.post('/order/cancle', {
-          orderId
-        }).then(res => {
-          if (res.data === 1) {
-            this.loading = true
-            this.$refs.tableList.getTableData()
-            this.$message({
-              type: 'success',
-              message: '取消成功!'
-            })
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
-    },
-    refund (val) {
-      let orderId = val.id
-      this.$confirm('确定要退款?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$http.post('/order/refund', {
-          orderId
-        }).then(res => {
-          if (res.data === 1) {
-            this.$message({
-              type: 'success',
-              message: '取消成功!'
-            })
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
     }
   }
 }

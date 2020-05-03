@@ -1,11 +1,12 @@
 <template>
   <div class="main">
+
     <HeanderTitle :name="name"/>
     <div class="continer">
       <Menu/>
       <router-view/>
     </div>
-    <Footer/>
+    <!-- <Footer/> -->
   </div>
 
 </template>

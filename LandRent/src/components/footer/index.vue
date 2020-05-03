@@ -1,5 +1,5 @@
 <template>
-  <div class="footer" v-show="ishow">
+  <div class="footer">
    <div style="width:1180px;margin:0 auto">
          <el-row>
      <el-col :span="5" style="padding-left:30px;margin-left:30px"><div >

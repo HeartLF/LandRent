@@ -45,6 +45,14 @@ import contractItem23 from '@/components/contractDetail/contract23'
 import contractItem24 from '@/components/contractDetail/contract24'
 import contractItem25 from '@/components/contractDetail/contract25'
 import contractItem26 from '@/components/contractDetail/contract26'
+// 管理界面
+import admin from '@/components/admin/index'
+import adminOrder from '@/components/admin/order/index'
+
+import adminPerson from '@/components/admin/user/index'
+
+import adminSales from '@/components/admin/sales/index'
+import adminLand from '@/components/admin/land/index'
 
 Vue.use(Router)
 
@@ -246,5 +254,26 @@ export default new Router({
     path: '/applay',
     name: 'applay',
     component: applay
+  }, {
+    path: '/admin',
+    name: 'admin',
+    component: admin,
+    children: [{
+      path: '/admin/person',
+      name: 'adminPerson',
+      component: adminPerson
+    }, {
+      path: '/admin/order',
+      name: 'adminOrder',
+      component: adminOrder
+    }, {
+      path: '/admin/sales',
+      name: 'adminSales',
+      component: adminSales
+    }, {
+      path: '/admin/land',
+      name: 'adminLand',
+      component: adminLand
+    }]
   }]
 })

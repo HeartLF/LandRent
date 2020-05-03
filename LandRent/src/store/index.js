@@ -4,7 +4,7 @@ import Vue from 'vue'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
-    userInfoName: '123',
+    userInfoName: '',
     activeIndex: '/home',
     ishow: true
   },

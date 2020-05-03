@@ -1,14 +1,16 @@
 <template>
   <div>
-    <h2 style="padding:10px 10px;color:#ff9f00">全部订单</h2>
+    <h2 style="padding:10px 10px;color:#ff9f00;text-align:left">全部订单</h2>
     <Table
+        ref="tableList"
         :tableData="tableData"
         :tableColumns="tableLabel"
         :page="page"
         :rows="rows"
         :total="total"
         :loading="loading"
-        sourceUrl="/order/getInvalidOrder"
+        :params='false'
+        sourceUrl="/order/allOrder"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
         @clickButton="clickButton"
@@ -34,13 +36,11 @@ export default {
       tableLabel: [
         {
           label: '订单编号',
-          param: 'id',
-          width: '200'
+          param: 'id'
         },
         {
           label: '创建时间',
           param: 'createTime',
-          width: '200',
           render: row => {
             let date = new Date(row.createTime)
             return date.toLocaleString()
@@ -49,7 +49,6 @@ export default {
         {
           label: '支付时间',
           param: 'payTime',
-          width: '200',
           render: row => {
             let date = new Date(row.payTime)
             return date.toLocaleString()
@@ -61,8 +60,7 @@ export default {
         },
         {
           label: '支付宝流水号',
-          param: 'tradeNo',
-          width: '200'
+          param: 'tradeNo'
         },
         {
           label: '订单状态',
@@ -82,17 +80,20 @@ export default {
       tableData: []
     }
   },
-  created () {
+  mounted () {
+    console.log(this.$refs.tableList)
+    // this.$refs.tableList.getTableData()
     // this.getTableData()
   },
   methods: {
-    getTableData () {
-      this.$http.post('/order/getInvalidOrder', {
-        'userId': +localStorage.getItem('useId')
-      }).then(res => {
-        this.tableData = res.data.data
-      })
-    },
+    // getTableData () {
+    //   this.$http.post('/order/getAllOrder', {
+    //     'userId': +localStorage.getItem('useId')
+    //   }).then(res => {
+    //     console.log(res.data)
+    //     this.tableData = res.data.data
+    //   })
+    // },
     // 切换当前一页展示多少条
     sizeChange (val) {
       this.rows = val
@@ -111,6 +112,57 @@ export default {
     // 排序
     sortChange (val) {
       console.log(val)
+    },
+    delOrder (val) {
+      let orderId = val.id
+      // 我是删除
+      this.$confirm('确定取消订单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.post('/order/cancle', {
+          orderId
+        }).then(res => {
+          if (res.data === 1) {
+            this.loading = true
+            this.$refs.tableList.getTableData()
+            this.$message({
+              type: 'success',
+              message: '取消成功!'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    refund (val) {
+      let orderId = val.id
+      this.$confirm('确定要退款?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.post('/order/refund', {
+          orderId
+        }).then(res => {
+          if (res.data === 1) {
+            this.$message({
+              type: 'success',
+              message: '取消成功!'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }

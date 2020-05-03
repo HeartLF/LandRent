@@ -2,6 +2,7 @@
   <div>
     <h2 style="padding:10px 10px;color:#ff9f00">待支付订单</h2>
     <Table
+        ref="tableList"
         :tableData="tableData"
         :tableColumns="tableLabel"
         :page="page"
@@ -35,11 +36,13 @@ export default {
       tableLabel: [
         {
           label: '订单编号',
-          param: 'id'
+          param: 'id',
+          width: '200'
         },
         {
           label: '创建时间',
           param: 'createTime',
+          width: '200',
           render: row => {
             let date = new Date(row.createTime)
             return date.toLocaleString()
@@ -48,6 +51,7 @@ export default {
         {
           label: '支付时间',
           param: 'payTime',
+          width: '200',
           render: row => {
             // let time = new Date().getTime()
             let date = new Date(row.payTime)
@@ -60,7 +64,8 @@ export default {
         },
         {
           label: '支付宝流水号',
-          param: 'tradeNo'
+          param: 'tradeNo',
+          width: '200'
         },
         {
           label: '订单状态',
@@ -82,8 +87,7 @@ export default {
         options: [
           {
             label: '重新支付',
-            type: 'danger',
-            icon: 'el-icon-delete',
+            type: 'primary',
             methods: 'repayment',
             ishow: true
           },
@@ -91,6 +95,12 @@ export default {
             label: '查看合同',
             type: 'primary',
             methods: 'toContract',
+            ishow: true
+          },
+          {
+            label: '取消订单',
+            type: 'primary',
+            methods: 'cancelOrder',
             ishow: true
           }
         ]
@@ -129,29 +139,30 @@ export default {
     sortChange (val) {
       console.log(val)
     },
-    del (val) {
+    cancelOrder (val) {
       // 我是删除
+      let orderId = val.id
       this.$confirm('确定取消订单?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.$http.post('/order/cancle', {
-          orderId: ''
+          orderId
         }).then(res => {
-          if (res.data === 1) {
-            this.loading = true
+          if (res.data.state === 1) {
+            // this.loading = true
             this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
               message: '取消成功!'
             })
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
           }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
         })
       })
     },
@@ -184,11 +195,6 @@ export default {
         //     })
         //   }
         // })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
     },
     toContract (val) {

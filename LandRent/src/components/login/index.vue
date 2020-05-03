@@ -1,8 +1,8 @@
 <template>
+<div>
+  <div style="width:100%;height:100%"></div>
   <div class="main">
     <div class="content">
-
-      {{userInfo}}
       <div class="word">请登录</div>
       <div class="form">
           <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="100px" class="demo-dynamic">
@@ -20,6 +20,7 @@
         </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

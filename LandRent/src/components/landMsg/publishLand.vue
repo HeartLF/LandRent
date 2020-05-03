@@ -88,9 +88,6 @@ export default {
       }
     }
   },
-  created () {
-    // this.getTableData()
-  },
   methods: {
     getTableData () {
       this.$http.post('/land/userAllLand', {
@@ -122,7 +119,6 @@ export default {
       console.log(val)
     },
     del (val) {
-      console.log(val)
       // 我是删除
       this.$confirm('确定要删除该土地吗?', '提示', {
         confirmButtonText: '确定',
@@ -139,13 +135,13 @@ export default {
               type: 'success',
               message: '取消成功!'
             })
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
           }
         })
-      }).catch(() => {
-        // this.$message({
-        //   type: 'info',
-        //   message: '已取消删除'
-        // })
       })
     },
     edit (val) {
@@ -155,9 +151,6 @@ export default {
           landId: val.id
         }
       })
-      // this.info = val
-      // this.show = true
-      // console.log(val)
     }
   }
 }

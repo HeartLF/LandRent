@@ -48,11 +48,11 @@
 
 <p style="text-indent:2em;">本合同未尽事宜，可经双方协商一致签定补充协议。补充协议与本合同具有同等效力。 本合同一式三份，由甲乙双方和村委会各执一份。</p>
 
-<p style="text-indent:2em;">甲方(公章)：_________　　　　　　　　乙方(公章)：_________</p>
+<p style="text-indent:2em;">甲方(公章)：_________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;乙方(公章)：_________</p>
 
-<p style="text-indent:2em;">法定代表人(签字):_________　　　　　法定代表人(签字)：_________</p>
+<p style="text-indent:2em;">法定代表人(签字):_________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;法定代表人(签字)：_________</p>
 
-<p style="text-indent:2em;">_________年____月____日　　　　　　　_________年____月____日</p>
+<p style="text-indent:2em;">_________年____月____日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________年____月____日</p>
 </div>
 <div style="text-align:center;margin:20px 20px"><el-button class="btn" @click="download">我要下载</el-button></div>
 </div>

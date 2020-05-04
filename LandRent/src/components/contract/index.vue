@@ -1,152 +1,207 @@
 <template>
   <div>
     <el-dialog title="土地租赁合同" :visible.sync="show">
-         <div class="contract_sample_box"><p style="text-indent:2em;"><strong>甲方：{{item.person}}</strong></p>
+      <div class="contract_sample_box">
+        <p style="text-indent:2em;">
+          <strong>甲方：{{ item.person }}</strong>
+        </p>
 
-<p style="text-indent:2em;"><strong>乙方：{{renter}}</strong></p>
+        <p style="text-indent:2em;">
+          <strong>乙方：{{ renter }}</strong>
+        </p>
 
-<p style="text-indent:2em;">为了促进经济发展，完善乡域内部土地承包体制，充分调动农牧民的积极性，甲乙双方本着平等、互利、共同发展的原则，经充分协商，现就有关土地承包问题达成如下合同条款，以供双方遵守。</p>
+        <p style="text-indent:2em;">
+          为了促进经济发展，完善乡域内部土地承包体制，充分调动农牧民的积极性，甲乙双方本着平等、互利、共同发展的原则，经充分协商，现就有关土地承包问题达成如下合同条款，以供双方遵守。
+        </p>
 
-<p style="text-indent:2em;">一、甲方辖区土地权属为国有，现承包给乙方种植经营，乙方在承包期内享有土地使用权，其承包面积为亩，(具体位臵：东至，南至，西至，北至)，合法从事农、林、牧、副业经营。</p>
+        <p style="text-indent:2em;">
+          一、甲方辖区土地权属为国有，现承包给乙方种植经营，乙方在承包期内享有土地使用权，其承包面积为亩，(具体位臵：东至，南至，西至，北至)，合法从事农、林、牧、副业经营。
+        </p>
 
-<p style="text-indent:2em;">二、本合同承包期{{item.years}}年，<span style="color:red">(自{{date.year}}年{{date.month}}月{{date.day}} 日起至{{deadline.expriedYear}} 年{{deadline.expriedMonth}}月{{deadline.expriedDay}}日止)</span></p>
+        <p style="text-indent:2em;">
+          二、本合同承包期{{ item.years }}年，<span style="color:red"
+            >(自{{ date.year }}年{{ date.month }}月{{ date.day }} 日起至{{
+              deadline.expriedYear
+            }}
+            年{{ deadline.expriedMonth }}月{{ deadline.expriedDay }}日止)</span
+          >
+        </p>
 
-<p style="text-indent:2em;">三、承包费及其他费用的交纳方式：</p>
+        <p style="text-indent:2em;">三、承包费及其他费用的交纳方式：</p>
 
-<p style="text-indent:2em;">1、依照《中华人民共和国土地管理法》及其他国家有关法律法规的规定，乙方承包土地必须向甲方缴纳土地承包费及其他国家法律、法规规定的费用。乙方因生产经营发生的一切费用，如水费、电费等由乙方负责承担，自行向相关部门交纳。</p>
+        <p style="text-indent:2em;">
+          1、依照《中华人民共和国土地管理法》及其他国家有关法律法规的规定，乙方承包土地必须向甲方缴纳土地承包费及其他国家法律、法规规定的费用。乙方因生产经营发生的一切费用，如水费、电费等由乙方负责承担，自行向相关部门交纳。
+        </p>
 
-<p style="text-indent:2em;">2、乙方自年起开始向甲方交纳土地承包费，土地承包费为年至年每亩每年元;年至年每亩每年元;年至年每亩每年元。</p>
+        <p style="text-indent:2em;">
+          2、乙方自年起开始向甲方交纳土地承包费，土地承包费为年至年每亩每年元;年至年每亩每年元;年至年每亩每年元。
+        </p>
 
-<p style="text-indent:2em;">3、乙方必须于当年十一月三十日前交清土地承包费，逾期不交者，按所欠承包费每天3‰加收滞纳金。如一年不交纳承包费或连续两年弃荒者，承包合同白行终止，甲方有权无偿收回其承包土地，并依据《中华人民共和国土地管理法》、《合同法》及相关法律法规的规定另行发包。</p>
+        <p style="text-indent:2em;">
+          3、乙方必须于当年十一月三十日前交清土地承包费，逾期不交者，按所欠承包费每天3‰加收滞纳金。如一年不交纳承包费或连续两年弃荒者，承包合同白行终止，甲方有权无偿收回其承包土地，并依据《中华人民共和国土地管理法》、《合同法》及相关法律法规的规定另行发包。
+        </p>
 
-<p style="text-indent:2em;">四、由于政府规划建设需要征用乙方所承包的土地，乙方应积极配合，征用土地造成的损失按国家相关政策执行。</p>
+        <p style="text-indent:2em;">
+          四、由于政府规划建设需要征用乙方所承包的土地，乙方应积极配合，征用土地造成的损失按国家相关政策执行。
+        </p>
 
-<p style="text-indent:2em;">五、在履行合同期间，如果国家调整物价及有关指数，甲方有权调整收取乙方缴费标准，由于政策的变动，甲、乙双方无法履行合同时，必须终止合同。</p>
+        <p style="text-indent:2em;">
+          五、在履行合同期间，如果国家调整物价及有关指数，甲方有权调整收取乙方缴费标准，由于政策的变动，甲、乙双方无法履行合同时，必须终止合同。
+        </p>
 
-<p style="text-indent:2em;">六、本合同由负责监督执行，并负责代收本合同规定乙方应缴纳的各项费用。</p>
+        <p style="text-indent:2em;">
+          六、本合同由负责监督执行，并负责代收本合同规定乙方应缴纳的各项费用。
+        </p>
 
-<p style="text-indent:2em;">七、甲方在改善农田水利基础设施及相关项目的实践中，乙方应承担部分建设资金，由甲方对人、财、物进行统一管理。</p>
+        <p style="text-indent:2em;">
+          七、甲方在改善农田水利基础设施及相关项目的实践中，乙方应承担部分建设资金，由甲方对人、财、物进行统一管理。
+        </p>
 
-<p style="text-indent:2em;">八、甲方的权利义务</p>
+        <p style="text-indent:2em;">八、甲方的权利义务</p>
 
-<p style="text-indent:2em;">(一)甲方的权利</p>
+        <p style="text-indent:2em;">(一)甲方的权利</p>
 
-<p style="text-indent:2em;">1、甲方有权对承包户进行国家有关法律法规及党在农村的各项政策进行宣讲，并组织实施，乙方应积极配合甲方的工作。</p>
+        <p style="text-indent:2em;">
+          1、甲方有权对承包户进行国家有关法律法规及党在农村的各项政策进行宣讲，并组织实施，乙方应积极配合甲方的工作。
+        </p>
 
-<p style="text-indent:2em;">2、甲方计算承包地面积按实有面积计算，扣除主道路、宅基地面积。</p>
+        <p style="text-indent:2em;">
+          2、甲方计算承包地面积按实有面积计算，扣除主道路、宅基地面积。
+        </p>
 
-<p style="text-indent:2em;">3、甲方有权对全乡农田水利基础设施，种植业结构、畜牧业发展等进行调整，统一规划，统一建设，合理开发利用。</p>
+        <p style="text-indent:2em;">
+          3、甲方有权对全乡农田水利基础设施，种植业结构、畜牧业发展等进行调整，统一规划，统一建设，合理开发利用。
+        </p>
 
-<p style="text-indent:2em;">4、甲方有权对乙方及雇工违反法律、法规行为(如违反宪法、刑法、土地法、计划生育政策、综合治理条例等)进行处理，并按有关法律、法规规定执行。</p>
+        <p style="text-indent:2em;">
+          4、甲方有权对乙方及雇工违反法律、法规行为(如违反宪法、刑法、土地法、计划生育政策、综合治理条例等)进行处理，并按有关法律、法规规定执行。
+        </p>
 
-<p style="text-indent:2em;">5、乙方在当年如遇到不可抗拒的自然灾害，甲方应实事求是，因地制宜，根据实际情况和乙方申请做出相应缓减措施。</p>
+        <p style="text-indent:2em;">
+          5、乙方在当年如遇到不可抗拒的自然灾害，甲方应实事求是，因地制宜，根据实际情况和乙方申请做出相应缓减措施。
+        </p>
 
-<p style="text-indent:2em;">(二)甲方的义务</p>
+        <p style="text-indent:2em;">(二)甲方的义务</p>
 
-<p style="text-indent:2em;">1、甲方有义务协调乙方与其他相邻土地承包户的关系。同时协助乙方解决相邻纠纷。</p>
+        <p style="text-indent:2em;">
+          1、甲方有义务协调乙方与其他相邻土地承包户的关系。同时协助乙方解决相邻纠纷。
+        </p>
 
-<p style="text-indent:2em;">2、甲方应保障乙方在承包期内的合法生产经营权。</p>
+        <p style="text-indent:2em;">
+          2、甲方应保障乙方在承包期内的合法生产经营权。
+        </p>
 
-<p style="text-indent:2em;">3、甲方应为乙方协调用水，用电等问题，实行统一管理。</p>
+        <p style="text-indent:2em;">
+          3、甲方应为乙方协调用水，用电等问题，实行统一管理。
+        </p>
 
-<p style="text-indent:2em;">4、甲方应以市场为导向，引导或指导乙方的农作物种植及产业结构调整。</p>
+        <p style="text-indent:2em;">
+          4、甲方应以市场为导向，引导或指导乙方的农作物种植及产业结构调整。
+        </p>
 
-<p style="text-indent:2em;">九、乙方的权利和义务</p>
+        <p style="text-indent:2em;">九、乙方的权利和义务</p>
 
-<p style="text-indent:2em;">(一)乙方的权利</p>
+        <p style="text-indent:2em;">(一)乙方的权利</p>
 
-<p style="text-indent:2em;">1、乙方有权向甲方咨询国家有关法律法规及党在农村的各项政策。</p>
+        <p style="text-indent:2em;">
+          1、乙方有权向甲方咨询国家有关法律法规及党在农村的各项政策。
+        </p>
 
-<p style="text-indent:2em;">2、乙方在当年如遇到不可抗拒的自然灾害，可根据实际情况向甲方申请相应缓减措施。</p>
+        <p style="text-indent:2em;">
+          2、乙方在当年如遇到不可抗拒的自然灾害，可根据实际情况向甲方申请相应缓减措施。
+        </p>
 
-<p style="text-indent:2em;">3、乙方有权对农业生产等事宜进行建议，甲方在具体实施中应</p>
+        <p style="text-indent:2em;">
+          3、乙方有权对农业生产等事宜进行建议，甲方在具体实施中应
+        </p>
 
-<p style="text-indent:2em;">充分考虑其意见。</p>
+        <p style="text-indent:2em;">充分考虑其意见。</p>
 
-<p style="text-indent:2em;">4、乙方有权监督甲方的管理效能。甲方在处理矛盾纠纷工作中，乙方对不合理现象在尊重事实的情况下，可实事求是的向甲方提出合理化建议和解决办法。</p>
+        <p style="text-indent:2em;">
+          4、乙方有权监督甲方的管理效能。甲方在处理矛盾纠纷工作中，乙方对不合理现象在尊重事实的情况下，可实事求是的向甲方提出合理化建议和解决办法。
+        </p>
 
-<p style="text-indent:2em;">5、乙方在承包期间，如果甲方无故终止或变更合同，乙方、有权要求甲方赔偿因此造成的一切经济损失。</p>
+        <p style="text-indent:2em;">
+          5、乙方在承包期间，如果甲方无故终止或变更合同，乙方、有权要求甲方赔偿因此造成的一切经济损失。
+        </p>
 
-<p style="text-indent:2em;">(二)乙方的义务</p>
+        <p style="text-indent:2em;">(二)乙方的义务</p>
 
-<p style="text-indent:2em;">1、乙方及雇工必须依法生产、合理经营，必须遵纪守法、严格遵守国家、自治区、自治州的有关法律、法规及条例规定，服从统一管理。</p>
+        <p style="text-indent:2em;">
+          1、乙方及雇工必须依法生产、合理经营，必须遵纪守法、严格遵守国家、自治区、自治州的有关法律、法规及条例规定，服从统一管理。
+        </p>
 
-<p style="text-indent:2em;">2、乙方必须按时交纳国家规定的各项费用和承包费，不得以任何借口拖欠，否则甲方有权按违约责任第3款执行。</p>
+        <p style="text-indent:2em;">
+          2、乙方必须按时交纳国家规定的各项费用和承包费，不得以任何借口拖欠，否则甲方有权按违约责任第3款执行。
+        </p>
 
-<p style="text-indent:2em;">3、乙方在承包期内，不得超越土地经营范围擅自改变土地农业用途和非法开荒，防止承包土地水土流失、沙化、盐碱化等现象发生，必须按照土地开发有关规定在所承包土地范围内栽种适当比例的防护林，合理保持当地生态平衡。否则甲方有权按违约责任第3款执行。</p>
+        <p style="text-indent:2em;">
+          3、乙方在承包期内，不得超越土地经营范围擅自改变土地农业用途和非法开荒，防止承包土地水土流失、沙化、盐碱化等现象发生，必须按照土地开发有关规定在所承包土地范围内栽种适当比例的防护林，合理保持当地生态平衡。否则甲方有权按违约责任第3款执行。
+        </p>
 
-<p style="text-indent:2em;">4、乙方在承包期内不得以任何方式转让、出租、抵押，土地。若需转让、出租、抵押和继承的。需报甲方审核批准备案后方可进行，并按程序办理相关转让手续否则转让、出租、抵押和继承手续无效。甲方有权按违约责任第3款执行。</p>
+        <p style="text-indent:2em;">
+          4、乙方在承包期内不得以任何方式转让、出租、抵押，土地。若需转让、出租、抵押和继承的。需报甲方审核批准备案后方可进行，并按程序办理相关转让手续否则转让、出租、抵押和继承手续无效。甲方有权按违约责任第3款执行。
+        </p>
 
-<p style="text-indent:2em;">5、乙方应接受甲方对农作物的种植引导或指导工作。甲方可根据政府宏观调控种植的任务调整乙方的种植计划。乙方必须服从。</p>
+        <p style="text-indent:2em;">
+          5、乙方应接受甲方对农作物的种植引导或指导工作。甲方可根据政府宏观调控种植的任务调整乙方的种植计划。乙方必须服从。
+        </p>
 
-<p style="text-indent:2em;">6、乙方在承包期内所建房屋、栽植的林木、及其他固定设施归乙方所有，如合同变更，甲、乙双方可协商解决。</p>
+        <p style="text-indent:2em;">
+          6、乙方在承包期内所建房屋、栽植的林木、及其他固定设施归乙方所有，如合同变更，甲、乙双方可协商解决。
+        </p>
 
-<p style="text-indent:2em;">7、在本合同期内，乙方如发生意外死亡或病逝，其家属和子女有权继承。在无经济实力和能力经营的情况下，必须通过甲方同意后方可按程序办理相关转让手续，否则转让无效。由此造成的一切责任及损失由乙方承担。</p>
+        <p style="text-indent:2em;">
+          7、在本合同期内，乙方如发生意外死亡或病逝，其家属和子女有权继承。在无经济实力和能力经营的情况下，必须通过甲方同意后方可按程序办理相关转让手续，否则转让无效。由此造成的一切责任及损失由乙方承担。
+        </p>
 
-<p style="text-indent:2em;">十、违约责任</p>
+        <p style="text-indent:2em;">十、违约责任</p>
 
-<p style="text-indent:2em;">1、甲乙双方必须严格履行本合同条款，不得违反、如有一方违反给另一方造成损失的，由过错方负责赔偿。</p>
+        <p style="text-indent:2em;">
+          1、甲乙双方必须严格履行本合同条款，不得违反、如有一方违反给另一方造成损失的，由过错方负责赔偿。
+        </p>
 
-<p style="text-indent:2em;">2、甲乙双方任何一方不得擅自终止合同，不得随意变更合同条款，如有违反赔偿对方的经济损失并终止合同。</p>
+        <p style="text-indent:2em;">
+          2、甲乙双方任何一方不得擅自终止合同，不得随意变更合同条款，如有违反赔偿对方的经济损失并终止合同。
+        </p>
 
-<p style="text-indent:2em;">3、乙方如出现违反本合同第九条所列的款项情形之一，甲方可限期乙方l5日内改正，逾期不改，甲方有权终止合同，无偿收回土地，由此造成的损失及责任，由乙方自负。</p>
+        <p style="text-indent:2em;">
+          3、乙方如出现违反本合同第九条所列的款项情形之一，甲方可限期乙方l5日内改正，逾期不改，甲方有权终止合同，无偿收回土地，由此造成的损失及责任，由乙方自负。
+        </p>
 
-<p style="text-indent:2em;">十一、本合同不随双方人事变动而随意改变，若遇国家政策、法律、条例等变动造成本合同与之相违背抵触的，按国家政策、法律、条例规定执行。双方未尽事宜，经双方协商取得一致意见后达成书面协议随本合同附后，作为本合同补充条款，同样具有法律效力。</p>
+        <p style="text-indent:2em;">
+          十一、本合同不随双方人事变动而随意改变，若遇国家政策、法律、条例等变动造成本合同与之相违背抵触的，按国家政策、法律、条例规定执行。双方未尽事宜，经双方协商取得一致意见后达成书面协议随本合同附后，作为本合同补充条款，同样具有法律效力。
+        </p>
 
-<p style="text-indent:2em;">十二、本合同一式三份，自以方签字或盖章之日起生效。本合同之前甲乙双方所签定的所有土地承包合同作废。</p>
-<h4>出租方：{{item.person}}</h4>
-                <h4>签订日期：<span style="color:red">{{date.year}}年{{date.month}}月{{date.day}}</span></h4>
-                <h4>承租方： {{renter}}</h4>
-                <h4>签订日期：<span style="color:red">{{date.year}}年{{date.month}}月{{date.day}}</span></h4>
-<!-- <p style="text-indent:2em;"><strong>甲方单位公章：</strong></p>
-
-<p style="text-indent:2em;"><strong>甲方法定代表人签章：</strong></p>
-
-<p style="text-indent:2em;"><strong>签字时间：&nbsp;年&nbsp;&nbsp;月&nbsp;&nbsp;日</strong></p>
-
-<p style="text-indent:2em;">&nbsp;</p>
-
-<p style="text-indent:2em;"><strong>乙方单位公章：</strong></p>
-
-<p style="text-indent:2em;"><strong>乙方法定代表人签章：</strong></p>
-
-<p style="text-indent:2em;"><strong>签字时间：&nbsp;&nbsp;年&nbsp;&nbsp;月&nbsp;&nbsp;日</strong></p> -->
-</div>
-        <!-- <div  ref="imageTofile">
-                <h4>甲方：{{item.person}}</h4>
-                <h4>乙方：{{renter}}</h4>
-                <p>根据相关法律、法规、政策规定，就乙方租赁甲方土地事宜，经双方协商一致，现签订如下协议，以便共同遵守：</p>
-                <p>一、合同标的：租赁土地(土地性质为国有)共 亩。土地位于：</p>
-                <p>二、租赁期限：租赁期限 年，<span style="color:red">(自{{date.year}}年{{date.month}}月{{date.day}} 日起至{{deadline.expriedYear}} 年{{deadline.expriedMonth}}月{{deadline.expriedDay}}日止)</span>。</p>
-                <p>三、租赁价款及付款办法：<span style="color:red">{{item.years}}年一次性支付{{allPrice}}元</span></p>
-                <p>四、租赁用途：由乙方自主使用。</p>
-                <p>五、甲方的权利义务：</p>
-                <p>1、拥有土地所有权，但不涉及乙方区域内规划等工作。在合同期内甲方应尊重乙方的生产经营自主权，不得干涉乙方正常的经营活动。</p>
-                <p>2、负责协调处理乙方与甲方及周边土地的关系，以维护乙方对该地的正常使用。</p>
-                <p>3、除收取租赁费以外，不再收取任何款项。</p>
-                <p>六、乙方的权利和义务：</p>
-                <p>1、在租赁期内，拥有租赁土地的使用权。</p>
-                <p>2、一次性支付甲方{{item.years}}年租金。</p>
-                <p>3、合同期间如遇到国家政策变动或国家征用，乙方必须服从，合同解除，没产生的租金一次性退还乙方，一切赔偿归甲方所有。</p>
-                <p>4、乙方不得转租，如出现转租视为乙方违约，合同解除。</p>
-                <p>七、特殊约定</p>
-                <p>在租赁期内，国家或集体征用土地，乙方应无条件服从，土地及地上附属物补偿款都归甲方，乙方由此造成的损失，按照乙方原始投资金额甲方给予补偿。</p>
-                <p>4、租期届满，承租方有权优先签订续租(按当时合理价格)合同。</p>
-                <p>5、租期届满，如乙方不再租赁，合同终止。</p>
-                <p>八、违约责任：</p>
-                <p>一方违约，由此给对方造成损失时，除向对方赔偿经济损失外，还应该按相关规定向对方承担违约责任。</p>
-                <p>九、本合同如有未尽事宜，按国家相关法律法规处理。</p>
-                <p>十、本合同一式三份，出租方、承租方、见证机关各执一份。</p>
-                <h4>出租方：{{item.person}}</h4>
-                <h4>签订日期：<span style="color:red">{{date.year}}年{{date.month}}月{{date.day}}</span></h4>
-                <h4>承租方： {{renter}}</h4>
-                <h4>签订日期：<span style="color:red">{{date.year}}年{{date.month}}月{{date.day}}</span></h4>
-        </div> -->
-        <h4 v-show="seeContract">请签名：</h4>
-        <Sign v-show="seeContract"/>
-         <el-checkbox v-show="seeContract" v-model="checked">请仔细阅读以上信息</el-checkbox>
+        <p style="text-indent:2em;">
+          十二、本合同一式三份，自以方签字或盖章之日起生效。本合同之前甲乙双方所签定的所有土地承包合同作废。
+        </p>
+        <h4>出租方：{{ item.person }}</h4>
+        <h4>
+          签订日期：<span style="color:red"
+            >{{ date.year }}年{{ date.month }}月{{ date.day }}</span
+          >
+        </h4>
+        <h4>承租方： {{ renter }}</h4>
+        <h4>
+          签订日期：<span style="color:red"
+            >{{ date.year }}年{{ date.month }}月{{ date.day }}</span
+          >
+        </h4>
+      </div>
+      <h4 v-show="seeContract">请签名：</h4>
+      <Sign v-show="seeContract" />
+      <el-checkbox v-show="seeContract" v-model="checked"
+        >请仔细阅读以上信息</el-checkbox
+      >
       <span slot="footer" class="dialog-footer">
-        <el-button v-show="seeContract" type="primary" size="small" @click="submit">立即支付</el-button>
+        <el-button
+          v-show="seeContract"
+          type="primary"
+          size="small"
+          @click="submit"
+          >立即支付</el-button
+        >
         <el-button size="small" @click="cancel">取 消</el-button>
       </span>
     </el-dialog>
@@ -188,10 +243,12 @@ export default {
     date () {
       let nowDate = new Date()
       let year = nowDate.getFullYear()
-      let month = nowDate.getMonth() + 1 < 10 ? '0' + (nowDate.getMonth() + 1)
-        : nowDate.getMonth() + 1
-      let day = nowDate.getDate() < 10 ? '0' + nowDate.getDate() : nowDate
-        .getDate()
+      let month =
+        nowDate.getMonth() + 1 < 10
+          ? '0' + (nowDate.getMonth() + 1)
+          : nowDate.getMonth() + 1
+      let day =
+        nowDate.getDate() < 10 ? '0' + nowDate.getDate() : nowDate.getDate()
       let dateStr = `${year}${month}${day}`
       return {
         year: year,
@@ -206,18 +263,22 @@ export default {
     renter () {
       let obj = localStorage.getItem('useInfo')
       return JSON.parse(obj).name
+    },
+    deadline () {
+      return this.getAfterNYear(this.date.dateStr, +this.item.years)
     }
   },
   data () {
     return {
       //   dialogTableVisible: true
       src: '',
-      checked: false,
-      deadline: ''
+      checked: false
+      // deadline: ''
     }
   },
   created () {
-    this.deadline = this.getAfterNYear(this.date.dateStr, +this.item.years)
+    // this.deadline = this.getAfterNYear(this.date.dateStr, +this.item.years)
+    // console.log(this.deadline)
   },
   methods: {
     submit () {
@@ -236,13 +297,15 @@ export default {
       this.$emit('update:showModel', false)
     },
     getAfterNYear (startdate, nextYear) {
-      var expriedYear = +(startdate.substring(0, 4)) + nextYear
+      var expriedYear = +startdate.substring(0, 4) + nextYear
+      console.log(expriedYear)
       var expriedMonth = startdate.substring(4, 6)
       var expriedDay = startdate.substring(6)
       // 考虑二月份场景，若N年后的二月份日期大于该年的二月份的最后一天，则取该年二月份最后一天
       if (expriedMonth === '02' || expriedMonth === 2) {
         var monthEndDate = new Date(expriedYear, expriedMonth, 0).getDate()
-        if (parseInt(expriedDay) > monthEndDate) { // 为月底时间
+        if (parseInt(expriedDay) > monthEndDate) {
+          // 为月底时间
           // 取两年后的二月份最后一天
           expriedDay = monthEndDate
         }

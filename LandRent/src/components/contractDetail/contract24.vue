@@ -34,7 +34,7 @@
 
 <p style="text-indent:2em;"><span style="font-size:14px">五、违约责任</span></p>
 
-<p style="text-indent:2em;"><span style="font-size:14px">1.甲乙双方在合同生效后应本着诚信的原则严格履行合同义务。如一方当事人违约，应向守约一方支付违约金。违约金的数额为　　_________。</span></p>
+<p style="text-indent:2em;"><span style="font-size:14px">1.甲乙双方在合同生效后应本着诚信的原则严格履行合同义务。如一方当事人违约，应向守约一方支付违约金。违约金的数额为_________。</span></p>
 
 <p style="text-indent:2em;"><span style="font-size:14px">2.如果违约金尚不足以弥补守约方经济损失时，违约方应在违约金之外增加支付赔偿金。赔偿金的数额依具体损失情况，由甲、乙双方协商，或由农村土地承包纠纷仲裁机构裁定，也可由人民法院判决。</span></p>
 

@@ -5,6 +5,7 @@
             @mousemove="pcMove"
             @mouseup="pcEnd">
     </canvas>
+    <!-- <el-image :src='src'/> -->
 </div>
 </template>
 <script>
@@ -13,6 +14,7 @@ export default {
   data () {
     return {
       ctx: null,
+      src: '',
       point: {
         x: 0,
         y: 0
@@ -61,8 +63,8 @@ export default {
     doImage () {
       var image = new Image()
       let board = this.$refs.board
-      image.src = board.toDataURL('image/png')
-      console.log(image.src)
+      this.src = board.toDataURL('image/png')
+      // console.log(image.src)
       return image
     }
   }

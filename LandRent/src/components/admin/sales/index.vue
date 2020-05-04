@@ -1,28 +1,15 @@
 <template>
   <div>
-    <h2 style="padding:10px 10px;color:#ff9f00;text-align:left">已发布土地信息</h2>
-    <Table
-        ref="tableList"
-        :tableColumns="tableLabel"
-        :page="page"
-        :rows="rows"
-        :total="total"
-        :loading="loading"
-        :tableOption="tableOption"
-         sourceUrl="/land/userAllLand"
-        @sizeChange="sizeChange"
-        @pageChange="pageChange"
-        @clickButton="clickButton"
-        @sortChange="sortChange"
-      ></Table>
-      <contractDialog  :showModel.sync="show"/>
+    <div ref="main" id="main" style="width:600px;height:500px;"></div>
+    <div ref="circle"  style="width:600px;height:500px;"></div>
   </div>
-
 </template>
 
 <script>
+import echarts from 'echarts'
 import Table from '@/components/table'
-import contractDialog from '@/components/contractDialog'
+import contractDialog from '@/components/contractDialog' // 引入echarts中国地图数据
+require('echarts/map/js/china')
 export default {
   components: {
     Table,
@@ -30,132 +17,119 @@ export default {
   },
   data () {
     return {
-      show: true,
-      info: {},
-      loading: true,
-      page: 1,
-      rows: 20,
-      total: 100,
-      // 表头数据
-      tableLabel: [
-        {
-          label: 'id',
-          param: 'id'
-        },
-        {
-          label: '姓名',
-          param: 'person'
-        },
-        {
-          label: '地址',
-          param: 'region'
-        },
-        {
-          label: '详细地址',
-          param: 'address'
-        },
-        {
-          label: '面积',
-          param: 'area'
-        },
-        {
-          label: '价格/亩',
-          param: 'price'
-        },
-        {
-          label: '标题',
-          param: 'title'
-        }
-      ],
-      // 表格操作
-      tableOption: {
-        label: '操作',
-        options: [
-          {
-            label: '删除',
-            type: 'danger',
-            icon: 'el-icon-delete',
-            methods: 'del',
-            ishow: true
-          },
-          {
-            label: '修改土地信息',
-            type: 'primary',
-            methods: 'edit',
-            ishow: true
-          }
-        ]
-      }
+      dateArray: []
     }
   },
+  mounted () {
+    this.getBeforeDate()
+    this.getBardata()
+    this.getCircleData()
+    // 挂载完毕后进行初始化地图数据
+
+    // 指定图表的配置项和数据
+
+    // 使用刚指定的配置项和数据显示图表。
+  },
   methods: {
-    getTableData () {
-      this.$http.post('/land/userAllLand', {
-        userId: +localStorage.getItem('useId')
-      }).then(res => {
-        let {data} = res
-        if (data.state === 1) {
-          this.tableData = data.data
+    getBeforeDate (n) {
+      var myDate = new Date() // 获取今天日期
+      myDate.setDate(myDate.getDate() - 7)
+      var dateTemp
+      var flag = 1
+      for (var i = 0; i < 7; i++) {
+        dateTemp = myDate.getMonth() + 1 + '-' + myDate.getDate()
+        this.dateArray.push(dateTemp)
+        myDate.setDate(myDate.getDate() + flag)
+      }
+    },
+    async getBardata () {
+      var myChart = echarts.init(this.$refs.main)
+      let result = await this.$http.post('/order/weekSales')
+      if (result.data.state === 1) {
+        var option = {
+          title: {
+            text: '土地前7天销量',
+            left: 'center'
+          },
+          tooltip: {},
+          legend: {
+            data: ['销量']
+          },
+          xAxis: {
+            type: 'category',
+            data: this.dateArray
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              data: result.data.data,
+              type: 'bar',
+              showBackground: true,
+              backgroundStyle: {
+                color: 'rgba(220, 220, 220, 0.8)'
+              }
+            }
+          ]
         }
-      })
+        myChart.setOption(option)
+      } else {
+        this.$message.error(`${result.data.message}`)
+      }
     },
-    // 切换当前一页展示多少条
-    sizeChange (val) {
-      this.rows = val
-      console.log(`每页 ${val} 条`)
-    },
-    // 翻页
-    pageChange (val) {
-      this.page = val
-      console.log(`当前页: ${val}`)
-    },
-    // 点击事件
-    clickButton (val) {
-      // 调用事件
-      this[val.methods](val.row)
-    },
-    // 排序
-    sortChange (val) {
-      console.log(val)
-    },
-    del (val) {
-      // 我是删除
-      this.$confirm('确定要删除该土地吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$http.post('/land/delById', {
-          landId: val.id
-        }).then(res => {
-          if (res.data.state === 1) {
-            this.loading = true
-            this.$refs.tableList.getTableData()
-            this.$message({
-              type: 'success',
-              message: '取消成功!'
-            })
-          } else {
-            this.$message({
-              type: 'error',
-              message: `${res.data.message}`
-            })
-          }
-        })
-      })
-    },
-    edit (val) {
-      this.$router.push({
-        name: 'MsgStep',
-        query: {
-          landId: val.id
+    async getCircleData () {
+      var myChart = echarts.init(this.$refs.circle)
+      let result = await this.$http.post('/order/SalesByType')
+      if (result.data.state === 1) {
+        let arr = []
+        let data = result.data.data
+        for (const key in data) {
+          arr.push({
+            name: key,
+            value: data[key]
+          })
         }
-      })
+        console.log(arr)
+        var option = {
+          title: {
+            text: '土地类型销售情况',
+            left: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['耕地', '林地', '农场', '农家乐']
+          },
+          series: [
+            {
+              name: '销售情况',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '60%'],
+              data: arr,
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+        }
+        myChart.setOption(option)
+      } else {
+        this.$message.error(`${result.data.message}`)
+      }
     }
   }
+
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

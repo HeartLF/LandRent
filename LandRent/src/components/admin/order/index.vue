@@ -9,7 +9,7 @@
         :rows="rows"
         :total="total"
         :loading="loading"
-        :params='false'
+        :flag='false'
         sourceUrl="/order/allOrder"
         @sizeChange="sizeChange"
         @pageChange="pageChange"
@@ -39,6 +39,14 @@ export default {
           param: 'id'
         },
         {
+          label: '土地ID',
+          param: 'landId'
+        },
+        {
+          label: '支付人',
+          param: 'userName'
+        },
+        {
           label: '创建时间',
           param: 'createTime',
           render: row => {
@@ -61,19 +69,6 @@ export default {
         {
           label: '支付宝流水号',
           param: 'tradeNo'
-        },
-        {
-          label: '订单状态',
-          param: 'status',
-          render: row => {
-            if (row.status === 0) {
-              return '待付款'
-            } else if (row.status === 1) {
-              return '已付款'
-            } else {
-              return '已退款'
-            }
-          }
         }
       ],
       // 表格数据

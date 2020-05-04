@@ -152,8 +152,14 @@ export default {
         })
       })
     },
-    handClick () {
-      this.show = true
+    handClick (val) {
+      this.$router.push({
+        name: 'contractItem',
+        query: {
+          landId: val.landId,
+          createTime: val.createTime
+        }
+      })
     }
   }
 }

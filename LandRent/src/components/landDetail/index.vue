@@ -89,6 +89,11 @@ export default {
       recommendLandList: []
     }
   },
+  watch: {
+    $route (val) {
+      this.getLandInfo(this.$route.params.id)
+    }
+  },
   created () {
     this.getLandInfo(this.$route.params.id)
     this.getRecommendLand()

@@ -189,6 +189,7 @@
           >
         </h4>
       </div>
+      <el-image src=""/>
       <h4 v-show="seeContract">请签名：</h4>
       <Sign @signSrc="getsignSrc" v-show="seeContract" />
       <el-checkbox v-show="seeContract" v-model="checked"

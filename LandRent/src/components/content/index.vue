@@ -48,6 +48,7 @@ export default {
           id: item.id
         }
       })
+    //   location.reload()
     }
   }
 }

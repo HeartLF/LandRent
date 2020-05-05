@@ -54,7 +54,7 @@ export default {
       this.$http.post('/order/pay', {
         userId,
         landId,
-        signSrc
+        'signature': signSrc
       }).then(res => {
         loading.close()
         document.write(res.data)

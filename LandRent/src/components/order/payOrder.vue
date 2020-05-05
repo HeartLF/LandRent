@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 import Content from '@/components/content'
 import Table from '@/components/table'
 export default {
@@ -107,6 +108,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setSignature']),
     // 切换当前一页展示多少条
     sizeChange (val) {
       this.rows = val
@@ -153,6 +155,7 @@ export default {
       })
     },
     handClick (val) {
+      this.setSignature(val.signature)
       this.$router.push({
         name: 'contractItem',
         query: {

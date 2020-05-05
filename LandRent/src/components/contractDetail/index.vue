@@ -188,14 +188,16 @@
           >
         </h4>
       </div>
+      <el-image :src="signature"/>
   </div>
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 export default {
   name: 'Contract',
   computed: {
+    ...mapState(['signature']),
     date () {
       let nowDate = new Date(this.$route.query.createTime)
       let year = nowDate.getFullYear()

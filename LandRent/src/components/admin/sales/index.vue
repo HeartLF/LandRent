@@ -57,7 +57,7 @@ export default {
           },
           xAxis: {
             type: 'category',
-            data: this.dateArray
+            data: this.dateArray.reverse()
           },
           yAxis: {
             type: 'value'
@@ -90,7 +90,6 @@ export default {
             value: data[key]
           })
         }
-        console.log(arr)
         var option = {
           title: {
             text: '土地类型销售情况',

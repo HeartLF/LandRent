@@ -190,7 +190,7 @@
         </h4>
       </div>
       <h4 v-show="seeContract">请签名：</h4>
-      <Sign v-show="seeContract" />
+      <Sign @signSrc="getsignSrc" v-show="seeContract" />
       <el-checkbox v-show="seeContract" v-model="checked"
         >请仔细阅读以上信息</el-checkbox
       >
@@ -272,7 +272,8 @@ export default {
     return {
       //   dialogTableVisible: true
       src: '',
-      checked: false
+      checked: false,
+      signsrc: ''
       // deadline: ''
     }
   },
@@ -286,12 +287,16 @@ export default {
         this.$router.push({
           name: 'applay',
           query: {
-            id: this.item.id
+            id: this.item.id,
+            userId: +localStorage.getItem('useId')
           }
         })
       } else {
         this.$message.error('请点击同意')
       }
+    },
+    getsignSrc (val) {
+      this.signsrc = val
     },
     cancel () {
       this.$emit('update:showModel', false)

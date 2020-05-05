@@ -8,7 +8,7 @@
                       <span><i class="el-icon-phone"></i>000-000-000</span>
                   </li>
                   <li>
-                    <el-tooltip class="item" effect="light" placement="top-start">
+                    <el-tooltip  effect="light" placement="top-start">
                        <span><i class="el-icon-chat-dot-round"></i>官方微信</span>
                        <div slot="content">
                         <el-image
@@ -20,7 +20,7 @@
                     </el-tooltip>
                   </li>
                   <li>
-                    <el-tooltip class="item" effect="light" placement="top-start">
+                    <el-tooltip  effect="light" placement="top-start">
                        <span><i class="el-icon-chat-dot-round"></i>广告合作</span>
                        <div slot="content">
                         <el-image
@@ -143,4 +143,4 @@ export default {
           font-size 16px
         &:hover
           cursor pointer
-</style>>
+</style>

@@ -65,6 +65,12 @@ export default {
             type: 'primary',
             methods: 'update',
             ishow: true
+          },
+          {
+            label: '注销',
+            type: 'primary',
+            methods: 'cancellation',
+            ishow: true
           }
         ]
       },
@@ -110,6 +116,32 @@ export default {
       console.log(val)
       this.ruleForm = val
       // let orderId = val.id
+    },
+    cancellation (val) {
+      let userId = val.id
+      this.$confirm('确定注销该账户?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.post('/user/delUser', {
+          userId
+        }).then(res => {
+          if (res.data.state === 1) {
+            this.loading = true
+            this.$refs.tableList.getTableData()
+            this.$message({
+              type: 'success',
+              message: '注销成功!'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
+          }
+        })
+      })
     }
   }
 }

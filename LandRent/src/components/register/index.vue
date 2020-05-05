@@ -113,7 +113,11 @@ export default {
       //   console.log(res)
       // })
       this.$http.post('/SMS/send', {'phone': this.form.phone}).then(res => {
-        console.log(res)
+        if (res.data === 1) {
+          this.$message.success('发送成功')
+        } else {
+          this.$message.error('发送失败')
+        }
       }).catch(err => {
         this.$message.error(err)
       })

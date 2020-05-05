@@ -9,6 +9,7 @@
 </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 // import draw from './draw.js'
 export default {
   data () {
@@ -31,6 +32,7 @@ export default {
     this.ctx.lineWidth = 5 // 线条宽度
   },
   methods: {
+    ...mapMutations(['setSignSrc']),
     // 鼠标按下(开始)
     pcStart (e) {
       // eslint-disable-next-line one-var
@@ -64,6 +66,8 @@ export default {
       var image = new Image()
       let board = this.$refs.board
       this.src = board.toDataURL('image/png')
+      this.setSignSrc(board.toDataURL('image/png'))
+      this.$emit('signSrc', board.toDataURL('image/png'))
       // console.log(image.src)
       return image
     }

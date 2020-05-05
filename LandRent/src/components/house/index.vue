@@ -15,7 +15,7 @@
         style="height:100%">
         <el-submenu index="1">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-location-information"></i>
             <span>我的土地</span>
           </template>
           <el-menu-item-group>
@@ -25,7 +25,7 @@
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-price-tag"></i>
             <span>我的订单</span>
           </template>
           <el-menu-item-group>

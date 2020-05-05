@@ -6,7 +6,8 @@ const store = new Vuex.Store({
   state: {
     userInfoName: '',
     activeIndex: '/home',
-    ishow: true
+    ishow: true,
+    signSrc: ''
   },
   mutations: {
     serUserInfo (state, name) {
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
     },
     setIshow (state, ishow) {
       state.ishow = ishow
+    },
+    setSignSrc (state, src) {
+      state.signSrc = src
     }
   }
 })

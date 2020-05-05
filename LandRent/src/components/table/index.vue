@@ -27,6 +27,16 @@
           <span v-else>{{ scope.row[item.param] }}</span>
         </template>
       </el-table-column>
+      <!-- <el-table-column
+        label="倒计时"
+        align="center"
+        width="100"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          {{countdown(scope.row)}}
+        </template>
+      </el-table-column> -->
       <!-- 操作 -->
       <el-table-column
         v-if="tableOption.label"
@@ -125,6 +135,7 @@ export default {
   },
   data () {
     return {
+      count: 0,
       tableData: [],
       vLoading: this.loading
     }
@@ -181,6 +192,15 @@ export default {
     handleSortChange (val) {
       this.$emit('sortChange', val)
     }
+    // countdown (count) {
+    //   let
+    //   let timer = setInterval(() => {
+    //     count--
+    //   }, 1000)
+    //   if (count === 5) {
+    //     clearInterval(timer)
+    //   }
+    // }
   }
 }
 </script>

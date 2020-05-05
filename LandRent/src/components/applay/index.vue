@@ -5,19 +5,24 @@
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 export default {
+
   data () {
     return {
       apply: '',
       loading: true
     }
   },
+  computed: {
+    ...mapState(['signSrc'])
+  },
   created () {
     let landId = +this.$route.query.id
+    let userId = +this.$route.query.userId
     let tradeId = this.$route.query.out_trade_no
     if (landId) {
-      this.orderPay(landId)
+      this.orderPay(landId, userId, this.signSrc)
     } else {
       this.orderRepay(tradeId)
     }
@@ -38,12 +43,8 @@ export default {
   //   console.log(error)
   //   this.loading = false
   // })
-
-  mounted () {
-
-  },
   methods: {
-    orderPay (landId) {
+    orderPay (landId, userId, signSrc) {
       const loading = this.$loading({
         lock: true,
         text: '正在加载中',
@@ -51,8 +52,9 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       this.$http.post('/order/pay', {
-        'userId': +localStorage.getItem('useId'),
-        landId
+        userId,
+        landId,
+        signSrc
       }).then(res => {
         loading.close()
         document.write(res.data)

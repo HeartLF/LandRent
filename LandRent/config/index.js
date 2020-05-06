@@ -11,12 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/': {
+      '/api': {
         target: `http://123.57.237.81`,
         changeOrigin: true, // needed for virtual hosted sites
-        // pathRewrite:{  // 路径重写，
-        //   '^/api': ''  // 替换target中的请求地址，也就是说以后你在请求http://api.douban.com/v2/XXXXX这个地址的时候直接写成/api即可。
-        // }
+        pathRewrite:{  // 路径重写，
+          '^/api': ''  // 替换target中的请求地址，也就是说以后你在请求http://api.douban.com/v2/XXXXX这个地址的时候直接写成/api即可。
+        }
       }
     },
 

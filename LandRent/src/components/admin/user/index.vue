@@ -78,6 +78,13 @@ export default {
       tableData: []
     }
   },
+  watch: {
+    show (val) {
+      if (!val) {
+        this.$refs.tableList.getTableData()
+      }
+    }
+  },
   mounted () {
     console.log(this.$refs.tableList)
     // this.$refs.tableList.getTableData()

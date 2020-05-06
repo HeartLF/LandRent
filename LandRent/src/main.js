@@ -11,7 +11,7 @@ import Vuex from 'vuex'
 Vue.config.productionTip = false
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
-
+axios.defaults.baseURL = '/api'
 Vue.use(ElementUI)
 Vue.use(Vuex)
 /* eslint-disable no-new */

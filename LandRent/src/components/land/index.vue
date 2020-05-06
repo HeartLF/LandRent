@@ -226,7 +226,7 @@ export default {
         'years': ''
       },
       allCity: city,
-      hotCity: '',
+      hotCity: city,
       list: [],
       pageNum: 1,
       total: 0,
@@ -272,6 +272,7 @@ export default {
     }
   },
   created () {
+    console.log(this.$route)
     // this.$http.get('/static/city.json').then(res => {
     //   this.allCity = res.data
     //   this.hotCity = res.data.slice(Math.floor(Math.random() * 10))
@@ -279,7 +280,11 @@ export default {
     //     name: '全部'
     //   })
     // })
-    this.getByLabel(this.form)
+    if (this.$route.query.key) {
+      this.search(this.test)
+    } else {
+      this.getByLabel(this.form)
+    }
   },
   mounted () {
 

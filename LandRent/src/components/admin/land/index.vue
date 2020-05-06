@@ -112,19 +112,39 @@ export default {
       // 我是删除
       let landId = val.id
       this.$confirm('确定审核该土地?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: '通过',
+        cancelButtonText: '不通过',
         type: 'warning'
       }).then(() => {
         this.$http.post('/land/checkLand', {
-          landId
+          'landId': landId,
+          'result': true
         }).then(res => {
           if (res.data.state === 1) {
             this.loading = true
             this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
-              message: '取消成功!'
+              message: '审核成功!'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: `${res.data.message}`
+            })
+          }
+        })
+      }).catch(() => {
+        this.$http.post('/land/checkLand', {
+          landId,
+          'result': false
+        }).then(res => {
+          if (res.data.state === 1) {
+            this.loading = true
+            this.$refs.tableList.getTableData()
+            this.$message({
+              type: 'success',
+              message: '审核不成功!'
             })
           } else {
             this.$message({

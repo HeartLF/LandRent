@@ -3,8 +3,8 @@
       <div class="main">
         <div class="continer fl">
                 <el-image
-                    style="width: 100px; height: 100px"
-                    src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                    style="width: 200px; height: 100px"
+                    src="http://www.diyiziti.com/Res/Images//Temp/418/da82483bda47474e8f07d4df0f791db6.PNG"
                     fit="fill">
                 </el-image>
         </div>

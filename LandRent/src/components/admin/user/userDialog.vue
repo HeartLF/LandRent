@@ -123,7 +123,11 @@ export default {
           this.$http.post('/user/alterUser', {
             ...this.ruleForm
           }).then(res => {
-            console.log(res)
+            if (res.data.state === 1) {
+              this.$emit('update:showModel', false)
+            } else {
+              this.$message.error(`${res.data.message}`)
+            }
           })
         } else {
           return false

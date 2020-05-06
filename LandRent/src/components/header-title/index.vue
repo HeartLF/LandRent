@@ -12,8 +12,8 @@
                        <span><i class="el-icon-chat-dot-round"></i>官方微信</span>
                        <div slot="content">
                         <el-image
-                        style="width: 228px; height: 159px"
-                        src="https://statics.tuliu.com/web/images/fheader_img01.png?ver=VV20200120"
+                        style="width: 176px; height: 230px"
+                        src="https://qr.api.cli.im/newqr/create?data=%E4%BA%91%E7%89%87%E5%9C%B0&level=H&transparent=false&bgcolor=%23FFFFFF&forecolor=%23000000&blockpixel=12&marginblock=2&logourl=http%3A%2F%2Fstatic.clewm.net%2Fcli%2Fimages%2Fbeautify%2Flogo%2Ficon2.png&size=200&bgimg=&logoshape=no&text=%E4%BA%91%E7%89%87%E5%9C%B0&fontsize=30&fontcolor=%2300a650&fontfamily=simsun.ttc&incolor=&outcolor=&qrcode_eyes=&background=&wper=0&hper=0&tper=0&lper=0&eye_use_fore=1&qrpad=10&kid=cliim&key=74ddfc9cb36b4f4b7716121707677029"
                         fits="fill"
                         ></el-image>
                        </div>
@@ -24,8 +24,8 @@
                        <span><i class="el-icon-chat-dot-round"></i>广告合作</span>
                        <div slot="content">
                         <el-image
-                        style="width: 228px; height: 159px"
-                        src="https://statics.tuliu.com/web/images/fheader_img01.png?ver=VV20200120"
+                        style="width: 176px; height: 230px"
+                        src="https://qr.api.cli.im/newqr/create?data=%E4%BA%91%E7%89%87%E5%9C%B0&level=H&transparent=false&bgcolor=%23FFFFFF&forecolor=%23000000&blockpixel=12&marginblock=2&logourl=http%3A%2F%2Fstatic.clewm.net%2Fcli%2Fimages%2Fbeautify%2Flogo%2Ficon2.png&size=200&bgimg=&logoshape=no&text=%E4%BA%91%E7%89%87%E5%9C%B0&fontsize=30&fontcolor=%2300a650&fontfamily=simsun.ttc&incolor=&outcolor=&qrcode_eyes=&background=&wper=0&hper=0&tper=0&lper=0&eye_use_fore=1&qrpad=10&kid=cliim&key=74ddfc9cb36b4f4b7716121707677029"
                         fits="fill"
                         ></el-image>
                        </div>

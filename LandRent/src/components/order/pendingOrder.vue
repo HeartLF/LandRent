@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 import Table from '@/components/table'
 export default {
   components: {
@@ -113,6 +114,7 @@ export default {
     // this.getTableData()
   },
   methods: {
+    ...mapMutations(['setSignature']),
     // getTableData () {
     //   this.$http.post('/order/getUnpaidOrderByUId', {
     //     'userId': +localStorage.getItem('useId')
@@ -198,6 +200,7 @@ export default {
       })
     },
     toContract (val) {
+      this.setSignature(val.signature)
       this.$router.push({
         name: 'contractItem',
         query: {

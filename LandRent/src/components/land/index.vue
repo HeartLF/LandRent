@@ -256,6 +256,7 @@ export default {
         if (!this.count) {
           this.search(this.test)
         } else {
+          this.pageNum = 1
           this.getByLabel(val)
         }
         this.count++

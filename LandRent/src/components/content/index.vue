@@ -101,6 +101,7 @@ export default {
 .image
     width: 100%
     display: block
+    height :162px
 
 .clearfix:before,
 .clearfix:after

@@ -42,7 +42,7 @@
                     </el-form-item>
                     <el-form-item label="上传图片" >
                         <el-upload
-                            action="landImage/upload"
+                            action="api/landImage/upload"
                             list-type="picture-card"
                             :on-success="handleImageSuccess"
                             :on-preview="handlePictureCardPreview"

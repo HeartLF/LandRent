@@ -33,10 +33,6 @@
                     <span style="color:#999">土地地点</span>
                     <span>{{`${list.region}${list.address}`}}</span>
                 </p>
-                <p class="fl" style="padding-top:20px">
-                    <span style="color:#999">总价</span>
-                    <span>{{+`${list.price}`*+`${list.area}`*+`${list.years}`}}元</span>
-                </p>
                 <p class="fl" style="margin-top:30px">
                     <el-button @click="handClick" style="widthL170px;height:44px;background-color: #ff4600;color:#fff">立即签约</el-button>
                 </p>

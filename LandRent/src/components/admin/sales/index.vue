@@ -123,7 +123,7 @@ export default {
         }
         myChart.setOption(option)
       } else {
-        this.$message.error(`${result.data.message}`)
+        // this.$message.error(`${result.data.message}`)
       }
     }
   }

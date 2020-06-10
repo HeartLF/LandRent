@@ -3,7 +3,7 @@
     <div class="box" style="overflow:hidden">
         <div class="item fl">
             <el-carousel trigger="click" height="345px">
-                <el-carousel-item v-for="item in list.images" :key="item">
+                <el-carousel-item v-for="(item,index) in list.images" :key="index">
                 <el-image
                     :src="'http://123.57.237.81'+item"
                     fit="fit"></el-image>

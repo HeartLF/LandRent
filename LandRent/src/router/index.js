@@ -55,7 +55,6 @@ import adminSales from '@/components/admin/sales/index'
 import adminLand from '@/components/admin/land/index'
 
 Vue.use(Router)
-
 export default new Router({
   mode: 'hash',
   routes: [{

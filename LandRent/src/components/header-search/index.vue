@@ -4,7 +4,7 @@
         <div class="continer fl">
                 <el-image
                     style="width: 200px; height: 100px"
-                    src="http://www.diyiziti.com/Res/Images//Temp/418/da82483bda47474e8f07d4df0f791db6.PNG"
+                    src="http://www.diyiziti.com/Res/Images//Temp/330/db316af9c0b1419b82e5c57736979405.PNG"
                     fit="fill">
                 </el-image>
         </div>

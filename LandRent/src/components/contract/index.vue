@@ -189,7 +189,6 @@
           >
         </h4>
       </div>
-      <el-image src=""/>
       <h4 v-show="seeContract">请签名：</h4>
       <Sign @signSrc="getsignSrc" v-show="seeContract" />
       <el-checkbox v-show="seeContract" v-model="checked"
@@ -281,10 +280,15 @@ export default {
   created () {
     // this.deadline = this.getAfterNYear(this.date.dateStr, +this.item.years)
     // console.log(this.deadline)
+    // this.$watermark.set('测试专用')
   },
   methods: {
     submit () {
-      if (this.checked) {
+      if (this.item.person === this.renter) {
+        this.$message.error('自己不能租赁自己发布的土地')
+        return
+      }
+      if (this.checked && this.item.person !== this.renter) {
         this.$router.push({
           name: 'applay',
           query: {

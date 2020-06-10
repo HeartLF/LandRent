@@ -8,6 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import store from './store/index'
 import Vuex from 'vuex'
+import watermark from '@/assets/watermark.js'
+Vue.prototype.$watermark = watermark
 Vue.config.productionTip = false
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
@@ -16,9 +18,9 @@ Vue.use(ElementUI)
 Vue.use(Vuex)
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
+  el: '#app', // 根节点
+  router, // 路由
+  store, // vuex
+  components: { App }, // 根组件
   template: '<App/>'
 })

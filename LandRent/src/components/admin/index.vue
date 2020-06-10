@@ -7,7 +7,7 @@
          <h2 @click="toHome" style="height:50px;line-height:50px;color: rgb(255, 159, 0);padding-left:10px">云片地租赁系统</h2>
           <!-- <el-image style="width: 210px; height: 54px" :src="url"></el-image> -->
         </el-col>
-        <el-col class="logout" :span="12">
+        <!-- <el-col class="logout" :span="12">
           <template>
             <div class="navOperater">
               <el-link type="info">退出系统</el-link>
@@ -19,7 +19,7 @@
               ></el-avatar>
             </div>
           </template>
-        </el-col>
+        </el-col> -->
       </el-row>
     </el-header>
     <el-container>

@@ -133,7 +133,7 @@ export default {
             this.$refs.tableList.getTableData()
             this.$message({
               type: 'success',
-              message: '取消成功!'
+              message: '删除成功!'
             })
           } else {
             this.$message({
